@@ -5,38 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a9274b73-a44d-4905-8a66-591982f3fcf8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.blueprint/config.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.blueprint/skills.manifest.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.codex/config.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.cursor/mcp.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.cursor/rules/blueprint.mdc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/landing-page-hexalis.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mcp.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.specify/init-options.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.specify/integration.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.specify/integrations/cursor-agent.manifest.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.specify/integrations/speckit.manifest.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.specify/memory/.constitution-template.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.specify/memory/constitution.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.specify/scripts/bash/check-prerequisites.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.specify/scripts/bash/common.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.specify/scripts/bash/create-new-feature.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.specify/scripts/bash/setup-plan.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.specify/scripts/bash/setup-tasks.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.specify/templates/checklist-template.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.specify/templates/constitution-template.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.specify/templates/plan-template.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.specify/templates/spec-template.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.specify/templates/tasks-template.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.specify/workflows/speckit/workflow.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.specify/workflows/workflow-registry.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.vscode/mcp.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opencode.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/pages.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pages.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/playwright.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/playwright.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/home/ui/home-screen.test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/home/ui/home-screen.test.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/home/ui/home-screen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/home/ui/home-screen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/ui/page-shell.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/e2e/home.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tests/e2e/home.spec.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,10 +93,10 @@
       <entry key="W1" value="15.998339423340578" />
     </decayedShown>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8,
-  "fromUser": false
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8,
+  &quot;fromUser&quot;: false
+}</component>
   <component name="ProjectId" id="3Kt9ijbRiS5wiCoeVSPPyQn40pP" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
@@ -128,24 +104,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "fix/pages-baseurl",
-    "ignore.virus.scanning.warn.message": "true",
-    "js.debugger.nextJs.config.created.client": "true",
-    "js.debugger.nextJs.config.created.server": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "pnpm",
-    "settings.editor.selected.configurable": "preferences.keymap"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/hexalis-landing&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
+    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="npm.Next.js: server-side">
     <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2" />
@@ -175,7 +151,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1765855348532</updated>
-      <workItem from="1792366127558" duration="520000" />
+      <workItem from="1792366127558" duration="1366000" />
     </task>
     <servers />
   </component>

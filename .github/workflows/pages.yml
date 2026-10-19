@@ -1,10 +1,11 @@
-# Publica `docs/` en GitHub Pages. Requiere Settings → Pages → Source: GitHub Actions.
-name: Docs
+# Publica el export estático de Next (`out/`) en GitHub Pages (hexalis.org).
+# Requiere Settings → Pages → Source: GitHub Actions. El dominio propio sirve en la raíz,
+# así que no hace falta basePath; si se quita el dominio, añade basePath "/landing-page".
+name: Pages
 
 on:
   push:
     branches: [main]
-    paths: [docs/**, .github/workflows/pages.yml]
   workflow_dispatch:
 
 permissions:
@@ -17,18 +18,29 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./out
+
   deploy:
+    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/configure-pages@v6
-      - uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./docs
-          destination: ./_site
-      - uses: actions/upload-pages-artifact@v5
       - id: deployment
         uses: actions/deploy-pages@v5

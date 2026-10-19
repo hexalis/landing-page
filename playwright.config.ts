@@ -12,7 +12,8 @@ export default defineConfig({
     trace: "on-first-retry",
   },
   webServer: {
-    command: isCi ? "pnpm start" : "pnpm dev",
+    // `next start` no funciona con `output: "export"`; en CI se sirve `out/` como lo hará Pages.
+    command: isCi ? "python3 -m http.server 3000 --directory out" : "pnpm dev",
     url: "http://localhost:3000",
     reuseExistingServer: !isCi,
   },

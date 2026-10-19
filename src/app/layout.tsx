@@ -14,8 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ABC",
-  description: "Plantilla Next.js modular",
+  title: "Hexalis · Ciencia abierta para la humanidad",
+  description:
+    "Plataformas abiertas para que los datos de las agencias que estudian el espacio, la Tierra y la economía lleguen a más personas.",
 };
 
 type RootLayoutProps = Readonly<{
