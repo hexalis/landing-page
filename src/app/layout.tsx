@@ -3,9 +3,9 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Red Lace Core · Explorador Global de Anomalías Terrestres",
+  title: "Red Lace Core · Crear en equipo, compartir conocimiento",
   description:
-    "Una nueva forma de explorar anomalías del océano, el hielo y la vegetación con datos abiertos de la NASA. Concepto de Red Lace Core para NASA Space Apps Challenge 2026.",
+    "Colectivo que combina diseño, tecnología y ciencia abierta para crear herramientas útiles y compartir conocimiento. Proyectos, equipo y forma de trabajo de Red Lace Core.",
 };
 
 type RootLayoutProps = Readonly<{

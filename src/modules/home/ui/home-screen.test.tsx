@@ -3,20 +3,17 @@ import { describe, expect, it } from "vitest";
 import { HomeScreen } from "./home-screen";
 
 describe("HomeScreen", () => {
-  it("presents the project, labels the concept preview, and links to the repository", () => {
+  it("presents the team, portfolio and invitation to collaborate", () => {
     render(<HomeScreen />);
 
     expect(
-      screen.getByRole("heading", { level: 1, name: "La Tierra nos está hablando." }),
+      screen.getByRole("heading", { level: 1, name: /Crear en equipo.*Compartir conocimiento/ }),
     ).toBeVisible();
-    expect(
-      screen.getByRole("heading", { name: /Del dato aislado a una historia visible/ }),
-    ).toBeVisible();
-    expect(screen.getByText("VISTA CONCEPTUAL · SIN DATOS EN VIVO")).toBeVisible();
-    expect(screen.getByText(/no representan mediciones actuales/)).toBeVisible();
-    expect(screen.getByRole("link", { name: /Explorar el repositorio/ })).toHaveAttribute(
+    expect(screen.getByRole("heading", { name: /Del proceso.*al proyecto/ })).toBeVisible();
+    expect(screen.getByRole("heading", { name: /Ninguna idea llega lejos/ })).toBeVisible();
+    expect(screen.getByRole("link", { name: /Abrir una conversación/ })).toHaveAttribute(
       "href",
-      "https://github.com/hexalis/landing-page",
+      "https://github.com/hexalis/landing-page/issues/new?title=Conversemos",
     );
   });
 });
