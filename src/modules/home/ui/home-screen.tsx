@@ -1,346 +1,378 @@
 import Link from "next/link";
-import { tv } from "tailwind-variants";
 
-const REPO_URL = "https://github.com/hexalis/landing-page";
-const PROPOSAL_URL = `${REPO_URL}/issues/new?title=${encodeURIComponent("Propuesta: ")}`;
-const FUNDING_URL = `${REPO_URL}/issues/new?title=${encodeURIComponent("Funding: ")}`;
-
-const navLinks = [
-  { href: "#vision", label: "Visión" },
-  { href: "#iniciativas", label: "Iniciativas" },
-  { href: "#hoja-de-ruta", label: "Hoja de ruta" },
-  { href: "#participa", label: "Participa" },
-  { href: "#funding", label: "Funding" },
+const repository = "https://github.com/hexalis/landing-page";
+const signals = [
+  { name: "Océano", detail: "Temperatura de la superficie marina", color: "#ef826f" },
+  { name: "Criósfera", detail: "Extensión del hielo marino", color: "#9bcce4" },
+  { name: "Tierra", detail: "Estado de la vegetación", color: "#abc993" },
 ];
+const places = ["Mar de Beaufort", "Amazonas", "Gran Barrera de Coral", "Taiga siberiana"];
 
-const principles = [
-  {
-    title: "Datos públicos, alcance público",
-    body: "Las agencias ya publican datos del espacio, la Tierra, el clima y la economía. Nuestro trabajo es que lleguen a más personas en interfaces que se entiendan.",
-  },
-  {
-    title: "Código abierto desde el primer commit",
-    body: "Todo vive en GitHub. Cualquiera puede leer, proponer, corregir o construir su propia plataforma sobre nuestros paquetes.",
-  },
-  {
-    title: "Gobernanza de quien contribuye",
-    body: "Las decisiones se toman en público y quienes aportan conservan su acceso y su voz en la iniciativa.",
-  },
-];
-
-const initiatives = [
-  {
-    name: "NASA Open Science",
-    body: "Política de ciencia abierta de NASA y su programa TOPS para que datos, código y publicaciones sean accesibles.",
-    href: "https://science.nasa.gov/open-science/",
-  },
-  {
-    name: "NASA Earthdata",
-    body: "Acceso abierto a los datos de observación de la Tierra de las misiones de NASA.",
-    href: "https://www.earthdata.nasa.gov/",
-  },
-  {
-    name: "Copernicus",
-    body: "Programa europeo de observación de la Tierra con datos libres y abiertos.",
-    href: "https://www.copernicus.eu/",
-  },
-  {
-    name: "NOAA Open Data Dissemination",
-    body: "Datos ambientales de NOAA publicados en la nube para uso público.",
-    href: "https://www.noaa.gov/nodd",
-  },
-  {
-    name: "UNESCO · Ciencia Abierta",
-    body: "Recomendación internacional que define principios comunes de ciencia abierta.",
-    href: "https://www.unesco.org/en/open-science",
-  },
-  {
-    name: "Banco Mundial · Open Data",
-    body: "Indicadores económicos y de desarrollo de libre acceso para todos los países.",
-    href: "https://data.worldbank.org/",
-  },
-];
-
-const roadmapItem = tv({
-  base: "grid gap-2 rounded-2xl border p-6",
-  variants: {
-    stage: {
-      now: "border-amber-400 bg-amber-50",
-      next: "border-stone-300 bg-white",
-    },
-  },
-  defaultVariants: { stage: "next" },
-});
-
-const roadmap = [
-  {
-    stage: "now",
-    tag: "Primera plataforma",
-    title: "NASA Space Apps Challenge 2026",
-    body: "Una plataforma para conocer los retos, los datos y los proyectos del challenge.",
-  },
-  {
-    stage: "next",
-    tag: "Plataforma",
-    title: "La Tierra en 20 años",
-    body: "Eventos y anomalías del planeta en las últimas dos décadas, explorables en el tiempo y en el mapa.",
-  },
-  {
-    stage: "next",
-    tag: "Base",
-    title: "Design system Hexalis",
-    body: "Componentes y lineamientos visuales compartidos por todas las plataformas.",
-  },
-  {
-    stage: "next",
-    tag: "Base",
-    title: "Paquetes core en npm",
-    body: "Clientes de datos, utilidades y visualizaciones reutilizables, publicados y versionados.",
-  },
-  {
-    stage: "next",
-    tag: "Ecosistema",
-    title: "Plataformas de la comunidad",
-    body: "Cada plataforma en su propio repositorio, construida sobre el design system y los paquetes core.",
-  },
-] as const;
-
-const steps = [
-  {
-    title: "Propón",
-    body: "Abre un issue con la plataforma que quieres crear y los datos que usaría.",
-  },
-  {
-    title: "Conversa",
-    body: "La comunidad revisa la propuesta en público y la ajusta antes de construir.",
-  },
-  {
-    title: "Construye",
-    body: "Usa el design system y los paquetes core. Tu plataforma vive en su repositorio.",
-  },
-  {
-    title: "Difunde",
-    body: "La landing la enlaza como punto de entrada para que llegue a más personas.",
-  },
-];
-
-const ctaLink = tv({
-  base: "inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2",
-  variants: {
-    intent: {
-      primary: "bg-amber-400 text-stone-950 hover:bg-amber-300 focus-visible:outline-amber-300",
-      ghost: "border border-white/25 text-white hover:border-white/60 focus-visible:outline-white",
-    },
-  },
-  defaultVariants: { intent: "primary" },
-});
-
-function HexMark() {
+function Mark() {
   return (
-    <svg viewBox="0 0 32 32" className="size-8" aria-hidden="true">
-      <path
-        d="M16 2 28.1 9v14L16 30 3.9 23V9Z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinejoin="round"
-      />
-      <path d="M16 9.5 21.6 12.75v6.5L16 22.5l-5.6-3.25v-6.5Z" fill="currentColor" />
+    <svg viewBox="0 0 40 40" fill="none" className="size-8" aria-hidden="true">
+      <path d="M20 2 36 11v18L20 38 4 29V11L20 2Z" stroke="currentColor" strokeWidth="1.7" />
+      <path d="m11 13 9 5 9-5M11 27l9-5 9 5M20 8v24" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="20" cy="20" r="2.8" fill="currentColor" />
     </svg>
   );
 }
 
-function SectionHeading({ id, kicker, title }: { id: string; kicker: string; title: string }) {
+function Earth() {
   return (
-    <div className="grid max-w-3xl gap-3">
-      <p className="text-sm font-semibold tracking-[0.12em] text-amber-700 uppercase">{kicker}</p>
-      <h2 id={id} className="text-3xl leading-tight font-bold tracking-tight sm:text-4xl">
-        {title}
-      </h2>
+    <div className="earth" aria-hidden="true">
+      <svg className="earth-map" viewBox="0 0 600 600" fill="#8bb8b0">
+        <path d="M-28 116c80-26 124-19 160 2l43 7 29 28-16 27 31 28-11 41-38 3-17 35-31 16-12 52-38 16-23-23-9-53-30-34-38-3-26-52Z" />
+        <path d="m174 317 48 10 36 49 1 48-26 42-7 58-31 59-27-2-13-52-24-43 13-44-23-29 11-54Z" />
+        <path d="m252 103 54-33 61 11 38-25 79 6 33 26 72-10 46 35-31 34-55 1-33 27-60-12-26 29-61-2-27 34-45-18-23-42-49-5-17-29Z" />
+        <path d="m330 231 56-11 39 31 14 64-32 61-27 70-44 31-34-35-3-51-24-35 18-59 37-66Z" />
+        <path d="m485 375 41-20 49 12 53 38-17 48-49 23-62-18-30-40Z" />
+        <path d="m8 531 107-17 130 34 115-12 112 17 140-20 28 78H0Z" />
+      </svg>
+      <span className="earth-shade" />
+      <i className="earth-point p1" />
+      <i className="earth-point p2" />
+      <i className="earth-point p3" />
+      <i className="earth-point p4" />
     </div>
   );
 }
 
 export function HomeScreen() {
   return (
-    <div className="bg-stone-50 text-stone-900">
-      <header className="bg-stone-950 text-white">
-        <div className="mx-auto flex w-[min(100%-2rem,72rem)] items-center justify-between gap-6 py-5">
+    <div className="site-shell">
+      <a className="skip-link" href="#contenido">
+        Saltar al contenido
+      </a>
+      <header className="site-header">
+        <div className="page-wrap flex items-center justify-between gap-5 py-5">
           <Link
             href="/"
-            className="flex items-center gap-3 font-bold tracking-tight text-amber-400"
+            className="brand flex items-center gap-3"
+            aria-label="Red Lace Core, inicio"
           >
-            <HexMark />
-            <span className="text-lg text-white">Hexalis</span>
+            <Mark />
+            <span className="text-xs leading-tight font-bold tracking-[.16em] uppercase">
+              Red Lace
+              <br />
+              <span className="font-normal tracking-[.3em]">Core</span>
+            </span>
           </Link>
-          <nav aria-label="Secciones" className="hidden gap-6 text-sm text-stone-300 md:flex">
-            {navLinks.map((link) => (
-              <a key={link.href} href={link.href} className="hover:text-white">
-                {link.label}
-              </a>
-            ))}
+          <nav
+            aria-label="Navegación principal"
+            className="hidden gap-8 text-xs font-semibold tracking-[.13em] uppercase md:flex"
+          >
+            <a href="#mision">La misión</a>
+            <a href="#explorador">El explorador</a>
+            <a href="#proceso">Cómo lo hacemos</a>
           </nav>
-          <a href={REPO_URL} className="text-sm font-semibold text-white hover:text-amber-300">
-            GitHub <span aria-hidden="true">{"\u2197\uFE0E"}</span>
+          <a className="nav-cta" href={repository} target="_blank" rel="noopener noreferrer">
+            Ver repositorio <span aria-hidden="true">↗</span>
           </a>
         </div>
       </header>
-
-      <main>
-        <section aria-labelledby="hero-title" className="bg-stone-950 pt-16 pb-24 text-white">
-          <div className="mx-auto grid w-[min(100%-2rem,72rem)] gap-8">
-            <p className="text-sm font-semibold tracking-[0.12em] text-amber-400 uppercase">
-              Hexalis es una filosofía
-            </p>
-            <h1
-              id="hero-title"
-              className="max-w-[18ch] text-[clamp(2.5rem,7vw,5rem)] leading-[1] font-bold tracking-[-0.04em]"
-            >
-              La ciencia abierta, al alcance de toda la humanidad.
-            </h1>
-            <p className="max-w-[62ch] text-lg leading-8 text-stone-300">
-              Las agencias que estudian el espacio, la Tierra y la economía comparten sus datos con
-              el mundo. Construimos plataformas abiertas para que esos datos lleguen a la mayor
-              cantidad de personas posible.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <a href={PROPOSAL_URL} className={ctaLink()}>
-                Proponer una plataforma
-              </a>
-              <a href="#funding" className={ctaLink({ intent: "ghost" })}>
-                Apoyar el proyecto
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <section aria-labelledby="vision" className="py-24">
-          <div className="mx-auto grid w-[min(100%-2rem,72rem)] gap-12">
-            <SectionHeading
-              id="vision"
-              kicker="Visión"
-              title="Seguimos la visión de ciencia abierta que comparten NASA y otras entidades."
-            />
-            <div className="grid gap-6 md:grid-cols-3">
-              {principles.map((principle) => (
-                <article key={principle.title} className="grid content-start gap-3">
-                  <h3 className="text-lg font-semibold">{principle.title}</h3>
-                  <p className="leading-7 text-stone-600">{principle.body}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section aria-labelledby="iniciativas" className="border-y border-stone-200 bg-white py-24">
-          <div className="mx-auto grid w-[min(100%-2rem,72rem)] gap-12">
-            <SectionHeading
-              id="iniciativas"
-              kicker="Corrientes e iniciativas"
-              title="Iniciativas que abren la ciencia y en las que nos inspiramos."
-            />
-            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {initiatives.map((initiative) => (
-                <li key={initiative.name}>
-                  <a
-                    href={initiative.href}
-                    className="grid h-full content-start gap-2 rounded-2xl border border-stone-200 p-6 transition-colors hover:border-amber-500 focus-visible:outline-2 focus-visible:outline-amber-500"
-                  >
-                    <span className="font-semibold">
-                      {initiative.name} <span aria-hidden="true">{"\u2197\uFE0E"}</span>
-                    </span>
-                    <span className="leading-6 text-stone-600">{initiative.body}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        <section aria-labelledby="hoja-de-ruta" className="py-24">
-          <div className="mx-auto grid w-[min(100%-2rem,72rem)] gap-12">
-            <SectionHeading
-              id="hoja-de-ruta"
-              kicker="Hoja de ruta"
-              title="Empezamos con una plataforma y una base compartida."
-            />
-            <ol className="grid gap-4 md:grid-cols-2">
-              {roadmap.map((item) => (
-                <li key={item.title} className={roadmapItem({ stage: item.stage })}>
-                  <span className="text-xs font-semibold tracking-[0.1em] text-stone-500 uppercase">
-                    {item.tag}
-                  </span>
-                  <h3 className="text-xl font-semibold">{item.title}</h3>
-                  <p className="leading-7 text-stone-600">{item.body}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-
-        <section aria-labelledby="participa" className="bg-stone-950 py-24 text-white">
-          <div className="mx-auto grid w-[min(100%-2rem,72rem)] gap-12">
-            <div className="grid max-w-3xl gap-3">
-              <p className="text-sm font-semibold tracking-[0.12em] text-amber-400 uppercase">
-                Participa
+      <main id="contenido">
+        <section className="cosmos scene" aria-labelledby="hero-title">
+          <div className="stars" aria-hidden="true" />
+          <div className="page-wrap hero-grid">
+            <div className="hero-copy">
+              <p className="eyebrow">
+                <span className="signal-dot" />
+                NASA Space Apps Challenge 2026 · Concepto en desarrollo
               </p>
-              <h2 id="participa" className="text-3xl leading-tight font-bold sm:text-4xl">
-                Somos seis personas. Queremos ser muchas más.
+              <h1 id="hero-title" className="font-display hero-title">
+                La Tierra nos está <em>hablando.</em>
+              </h1>
+              <p className="intro">
+                Convertimos datos abiertos de observación terrestre en señales que cualquiera pueda
+                explorar, comparar y comprender.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <a className="button-primary" href="#explorador">
+                  Explorar la idea <span aria-hidden="true">↗</span>
+                </a>
+                <a className="button-secondary" href="#mision">
+                  Descubrir la misión <span aria-hidden="true">↓</span>
+                </a>
+              </div>
+            </div>
+            <div className="hero-visual" aria-hidden="true">
+              <div className="orbit orbit-outer" />
+              <div className="orbit orbit-inner" />
+              <div className="hero-core" />
+              <span className="orbit-label top">51° N / 112° W</span>
+              <span className="orbit-label bottom">SEÑAL / SISTEMA TIERRA</span>
+            </div>
+          </div>
+          <div className="page-wrap scroll-cue">
+            <span /> Desplázate para seguir la señal
+          </div>
+        </section>
+
+        <section id="mision" className="mission-section scene" aria-labelledby="mission-title">
+          <div className="page-wrap mission-grid">
+            <div>
+              <p className="eyebrow">01 / De la distancia a la evidencia</p>
+              <h2 id="mission-title" className="font-display section-title">
+                El cambio se ve cuando sabemos <em>dónde mirar.</em>
               </h2>
-              <p className="text-lg leading-8 text-stone-300">
-                Esta landing es el punto de entrada de las propuestas. Cualquier persona puede
-                enviar la suya en GitHub.
+            </div>
+            <div className="mission-copy">
+              <p className="lead">
+                Una anomalía es una diferencia frente a lo habitual. Ponerla en contexto ayuda a
+                hacer preguntas mejores.
+              </p>
+              <p>
+                Red Lace Core propone un Explorador Global de Anomalías Terrestres: un lugar para
+                observar cambios en el océano, el hielo y la vegetación a partir de datos abiertos
+                de la NASA.
+              </p>
+              <p>
+                Queremos acercar esas señales a personas que no trabajan con herramientas de ciencia
+                de datos.
               </p>
             </div>
-            <ol className="grid gap-6 md:grid-cols-4">
-              {steps.map((step, index) => (
-                <li
-                  key={step.title}
-                  className="grid content-start gap-2 border-t border-white/15 pt-4"
-                >
-                  <span className="font-mono text-sm text-amber-400">0{index + 1}</span>
-                  <h3 className="text-lg font-semibold">{step.title}</h3>
-                  <p className="leading-7 text-stone-300">{step.body}</p>
-                </li>
-              ))}
-            </ol>
-            <div>
-              <a href={PROPOSAL_URL} className={ctaLink()}>
-                Enviar una propuesta en GitHub
+          </div>
+          <div className="page-wrap signal-grid">
+            {signals.map((item, index) => (
+              <article
+                className="signal-card"
+                key={item.name}
+                style={{ borderTopColor: item.color }}
+              >
+                <span className="frame-label">0{index + 1} / SEÑAL</span>
+                <span className="signal-icon" style={{ backgroundColor: item.color }} />
+                <h3 className="font-display">{item.name}</h3>
+                <p>{item.detail}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="earth-section scene" aria-labelledby="earth-title">
+          <div className="page-wrap earth-grid">
+            <div className="earth-copy">
+              <p className="eyebrow">02 / El planeta entra en foco</p>
+              <h2 id="earth-title" className="font-display section-title">
+                Un planeta.
+                <br />
+                <em>Muchas señales.</em>
+              </h2>
+              <p className="intro">
+                De una vista global a una región concreta. El recorrido revela qué cambia, cómo
+                evoluciona y qué tan confiable es cada lectura.
+              </p>
+              <a className="text-link" href="#explorador">
+                Conoce el explorador <span aria-hidden="true">↗</span>
               </a>
+            </div>
+            <div className="earth-stage">
+              <div className="earth-ring outer" />
+              <div className="earth-ring inner" />
+              <Earth />
+              <span className="earth-caption">
+                OBSERVACIÓN GLOBAL <b>●</b> DATOS ABIERTOS
+              </span>
             </div>
           </div>
         </section>
 
-        <section aria-labelledby="funding" className="py-24">
-          <div className="mx-auto grid w-[min(100%-2rem,72rem)] gap-6 rounded-3xl border border-amber-300 bg-amber-50 p-8 sm:p-12">
-            <SectionHeading
-              id="funding"
-              kicker="Funding"
-              title="Buscamos financiamiento para esta etapa."
-            />
-            <p className="max-w-[62ch] text-lg leading-8 text-stone-700">
-              El apoyo financiero nos permite construir el design system, publicar los paquetes core
-              y lanzar las primeras plataformas. Si tu organización comparte esta visión,
-              conversemos.
+        <section
+          id="explorador"
+          className="explorer-section scene"
+          aria-labelledby="explorer-title"
+        >
+          <div className="page-wrap">
+            <div className="section-intro">
+              <div>
+                <p className="eyebrow">03 / Una forma de explorar</p>
+                <h2 id="explorer-title" className="font-display section-title">
+                  Del dato aislado a una <em>historia visible.</em>
+                </h2>
+              </div>
+              <p className="intro">
+                El portal está pensado para pasar de un mapa de anomalías a casos regionales y
+                tendencias históricas, sin perder de vista el origen y la confianza del dato.
+              </p>
+            </div>
+            <div
+              className="explorer-frame"
+              aria-label="Vista conceptual del Explorador Global de Anomalías Terrestres"
+            >
+              <div className="frame-top">
+                <div className="flex items-center gap-3">
+                  <Mark />
+                  <span>
+                    EXPLORADOR GLOBAL
+                    <br />
+                    <small>ANOMALÍAS TERRESTRES</small>
+                  </span>
+                </div>
+                <span className="concept-tag">VISTA CONCEPTUAL · SIN DATOS EN VIVO</span>
+              </div>
+              <div className="frame-body">
+                <div className="frame-sidebar">
+                  <span className="frame-label">CAPAS DE OBSERVACIÓN</span>
+                  <div className="layer-list">
+                    {signals.map((item) => (
+                      <div className="layer-row" key={item.name}>
+                        <i style={{ backgroundColor: item.color }} />
+                        {item.name}
+                        <span>○</span>
+                      </div>
+                    ))}
+                  </div>
+                  <hr />
+                  <span className="frame-label">FORMAS DE VER</span>
+                  <div className="view-list">
+                    <span className="active">Mapa</span>
+                    <span>Globo</span>
+                    <span>Nube</span>
+                  </div>
+                  <p>Un mismo sistema, distintas perspectivas para encontrar patrones.</p>
+                </div>
+                <div className="frame-map">
+                  <div className="map-grid" />
+                  <div className="map-ring one" />
+                  <div className="map-ring two" />
+                  <i className="map-point one" />
+                  <i className="map-point two" />
+                  <i className="map-point three" />
+                  <i className="map-point four" />
+                  <i className="map-point five" />
+                  <span className="map-coordinate">GLOBAL / EXPLORACIÓN</span>
+                  <span className="map-note">
+                    Selecciona una señal.
+                    <br />
+                    Descubre su contexto.
+                  </span>
+                </div>
+                <div className="frame-cases">
+                  <span className="frame-label">REGIONES PARA EXPLORAR</span>
+                  <div className="case-list">
+                    {places.map((place, index) => (
+                      <div className="case-row" key={place}>
+                        <small>0{index + 1}</small>
+                        {place}
+                        <span>↗</span>
+                      </div>
+                    ))}
+                  </div>
+                  <hr />
+                  <span className="frame-label">AL ABRIR UN CASO</span>
+                  <p>Desviación frente a lo habitual, confianza del dato y serie de tiempo.</p>
+                  <div className="chart-placeholder">
+                    <svg viewBox="0 0 240 70" preserveAspectRatio="none" aria-hidden="true">
+                      <path
+                        d="M0 53 27 48 52 55 76 36 100 41 128 31 150 39 176 19 201 27 222 12 240 17"
+                        fill="none"
+                        stroke="#e8796b"
+                        strokeWidth="2"
+                      />
+                    </svg>
+                  </div>
+                  <span className="frame-label">ESQUEMA ILUSTRATIVO · SIN VALORES</span>
+                </div>
+              </div>
+            </div>
+            <p className="frame-disclaimer">
+              Este esquema muestra la experiencia propuesta. Las visualizaciones y regiones son
+              ejemplos; no representan mediciones actuales.
             </p>
+          </div>
+        </section>
+
+        <section id="proceso" className="process-section scene" aria-labelledby="process-title">
+          <div className="page-wrap process-grid">
             <div>
+              <p className="eyebrow">04 / Cómo toma forma</p>
+              <h2 id="process-title" className="font-display section-title">
+                Diseñar también es <em>hacer visible el proceso.</em>
+              </h2>
+              <p className="intro">
+                Nuestro trabajo conecta investigación, decisiones documentadas y una interfaz que
+                pueda crecer con el proyecto.
+              </p>
+            </div>
+            <div className="process-list">
+              <article>
+                <span>01</span>
+                <div>
+                  <h3>Investigar el problema</h3>
+                  <p>
+                    FigJam reúne la problemática y la investigación para definir preguntas antes de
+                    diseñar respuestas.
+                  </p>
+                </div>
+              </article>
+              <article>
+                <span>02</span>
+                <div>
+                  <h3>Registrar las decisiones</h3>
+                  <p>Un decision log conserva qué se decidió, por qué, cuándo y quién participó.</p>
+                </div>
+              </article>
+              <article>
+                <span>03</span>
+                <div>
+                  <h3>Diseñar un sistema coherente</h3>
+                  <p>
+                    Hexalis aporta componentes y tokens de interfaz; Design Ops Toolkit documenta su
+                    uso.
+                  </p>
+                </div>
+              </article>
+              <article>
+                <span>04</span>
+                <div>
+                  <h3>Pasar de concepto a interfaz</h3>
+                  <p>
+                    El trabajo en Figma avanza por producto, design system, laboratorio visual,
+                    prototipo y handoff.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section className="final-section scene" aria-labelledby="final-title">
+          <div className="page-wrap final-grid">
+            <div>
+              <p className="eyebrow">El siguiente paso empieza aquí</p>
+              <h2 id="final-title" className="font-display section-title">
+                Mirar la Tierra de otra <em>manera.</em>
+              </h2>
+              <p className="intro">
+                Red Lace Core trabaja en una puerta de entrada para entender las señales del
+                planeta. Sigue el proyecto y participa en su construcción abierta.
+              </p>
               <a
-                href={FUNDING_URL}
-                className="inline-flex items-center justify-center rounded-full bg-stone-950 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-stone-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-950"
+                className="button-primary"
+                href={repository}
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                Hablemos de funding
+                Explorar el repositorio <span aria-hidden="true">↗</span>
               </a>
+            </div>
+            <div className="final-earth">
+              <Earth />
             </div>
           </div>
         </section>
       </main>
-
-      <footer className="border-t border-stone-200 py-10 text-sm text-stone-500">
-        <div className="mx-auto flex w-[min(100%-2rem,72rem)] flex-wrap items-center justify-between gap-4">
-          <span>Hexalis · ciencia abierta para la humanidad.</span>
-          <a href={REPO_URL} className="hover:text-stone-900">
-            Código en GitHub
+      <footer className="footer">
+        <div className="page-wrap footer-grid">
+          <div className="flex items-center gap-3 font-semibold tracking-widest uppercase">
+            <Mark /> Red Lace Core
+          </div>
+          <p>
+            Proyecto independiente para NASA Space Apps Challenge 2026. No afiliado ni patrocinado
+            por la NASA.
+          </p>
+          <a href={repository} target="_blank" rel="noopener noreferrer">
+            Código en GitHub ↗
           </a>
         </div>
       </footer>

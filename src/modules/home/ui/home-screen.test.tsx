@@ -3,19 +3,20 @@ import { describe, expect, it } from "vitest";
 import { HomeScreen } from "./home-screen";
 
 describe("HomeScreen", () => {
-  it("presents the open science vision and the proposal entry point", () => {
+  it("presents the project, labels the concept preview, and links to the repository", () => {
     render(<HomeScreen />);
 
     expect(
-      screen.getByRole("heading", {
-        level: 1,
-        name: "La ciencia abierta, al alcance de toda la humanidad.",
-      }),
+      screen.getByRole("heading", { level: 1, name: "La Tierra nos está hablando." }),
     ).toBeVisible();
-    expect(screen.getByRole("heading", { name: "NASA Space Apps Challenge 2026" })).toBeVisible();
-    expect(screen.getByRole("link", { name: "Proponer una plataforma" })).toHaveAttribute(
+    expect(
+      screen.getByRole("heading", { name: /Del dato aislado a una historia visible/ }),
+    ).toBeVisible();
+    expect(screen.getByText("VISTA CONCEPTUAL · SIN DATOS EN VIVO")).toBeVisible();
+    expect(screen.getByText(/no representan mediciones actuales/)).toBeVisible();
+    expect(screen.getByRole("link", { name: /Explorar el repositorio/ })).toHaveAttribute(
       "href",
-      expect.stringContaining("https://github.com/hexalis/landing-page/issues/new"),
+      "https://github.com/hexalis/landing-page",
     );
   });
 });

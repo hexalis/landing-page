@@ -1,22 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import type { ReactNode } from "react";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "Hexalis · Ciencia abierta para la humanidad",
+  title: "Red Lace Core · Explorador Global de Anomalías Terrestres",
   description:
-    "Plataformas abiertas para que los datos de las agencias que estudian el espacio, la Tierra y la economía lleguen a más personas.",
+    "Una nueva forma de explorar anomalías del océano, el hielo y la vegetación con datos abiertos de la NASA. Concepto de Red Lace Core para NASA Space Apps Challenge 2026.",
 };
 
 type RootLayoutProps = Readonly<{
@@ -25,7 +14,7 @@ type RootLayoutProps = Readonly<{
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="es" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="es">
       <body>{children}</body>
     </html>
   );
