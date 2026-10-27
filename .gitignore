@@ -1,57 +1,9 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/package-lock.json
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
-
-# testing
-/coverage
-/playwright-report
-/test-results
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# env files (can opt-in for committing if needed)
-.env*
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
-
-# --- Blueprint workspace ---
-# SDD spec artifacts are ephemeral on disk — durable state lives in the
-# Blueprint memory store (~/.blueprint/local.db). See docs/ROADMAP.md.
-specs/
-.blueprint/state/
-.blueprint/cache/
-# Agent skill links are per-user symlinks into a global cache; recreate
-# them with `blueprint skills sync`. The .blueprint/skills.manifest.json IS committed.
-.agents/skills/
-.claude/skills/
-.idea
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+playwright-report/
+test-results/
+.taste-skill/

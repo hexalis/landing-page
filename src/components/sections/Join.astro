@@ -1,0 +1,21 @@
+---
+import type { Locale } from '../../lib/routes';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = (es: string, en: string) => (locale === 'en' ? en : es);
+---
+<section class="sec" id="sumate" aria-labelledby="joinTitle">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <h2 class="join-title" id="joinTitle">{tr("Hay un cursor libre:", "There is a free cursor:")} <span class="cursor-word">{tr("el tuyo", "yours")}<span class="cur" style="--c: var(--accent); --ink: var(--on-accent)" aria-hidden="true"><svg><use href="#arrow"/></svg><b>{tr("Tú", "You")}</b></span></span></h2>
+        <p>{tr("Elige cómo quieres participar. Las librerías ya están en Figma; los repositorios se abren pronto.", "Choose how you want to take part. The libraries are already in Figma; the repositories open soon.")}</p>
+      </div>
+      <ol class="paths rise">
+        <li class="path ds"><svg class="path-hex" viewBox="0 0 100 115.47" aria-hidden="true"><path d="M57.8 4.5 L92.2 24.4 Q100.0 28.9 100.0 37.9 L100.0 77.6 Q100.0 86.6 92.2 91.1 L57.8 111.0 Q50.0 115.5 42.2 111.0 L7.8 91.1 Q0.0 86.6 0.0 77.6 L0.0 37.9 Q0.0 28.9 7.8 24.4 L42.2 4.5 Q50.0 0.0 57.8 4.5Z"/></svg><h3>{tr("Si diseñas", "If you design")}</h3><div class="path-body"><p>{tr("Usa nuestras librerías en tus proyectos y ayúdanos a mejorarlas.", "Use our libraries in your projects and help us improve them.")}</p><ul><li>{tr("Duplica las librerías en Figma", "Duplicate the libraries in Figma")}</li><li>{tr("Propón componentes o mejoras", "Propose components or improvements")}</li></ul></div><a class="btn btn-primary" href="#obras">{tr("Ver las librerías", "See the libraries")}</a></li>
+        <li class="path ops"><svg class="path-hex" viewBox="0 0 100 115.47" aria-hidden="true"><path d="M57.8 4.5 L92.2 24.4 Q100.0 28.9 100.0 37.9 L100.0 77.6 Q100.0 86.6 92.2 91.1 L57.8 111.0 Q50.0 115.5 42.2 111.0 L7.8 91.1 Q0.0 86.6 0.0 77.6 L0.0 37.9 Q0.0 28.9 7.8 24.4 L42.2 4.5 Q50.0 0.0 57.8 4.5Z"/></svg><h3>{tr("Si programas", "If you code")}</h3><div class="path-body"><p>{tr("Cuando abramos los repositorios podrás aportar variables de diseño, componentes y proyectos.", "When we open the repositories you will be able to contribute design variables, components and projects.")}</p><ul><li>{tr("Sigue la organización en GitHub", "Follow the organization on GitHub")}</li><li>{tr("Te avisamos cuando haya tareas abiertas", "We will let you know when there are open tasks")}</li></ul></div><a class="btn btn-ghost" data-link="github" href="#">{tr("Ir a GitHub", "Go to GitHub")}</a></li>
+        <li class="path org"><svg class="path-hex" viewBox="0 0 100 115.47" aria-hidden="true"><path d="M57.8 4.5 L92.2 24.4 Q100.0 28.9 100.0 37.9 L100.0 77.6 Q100.0 86.6 92.2 91.1 L57.8 111.0 Q50.0 115.5 42.2 111.0 L7.8 91.1 Q0.0 86.6 0.0 77.6 L0.0 37.9 Q0.0 28.9 7.8 24.4 L42.2 4.5 Q50.0 0.0 57.8 4.5Z"/></svg><h3>{tr("Si representas una organización", "If you represent an organization")}</h3><div class="path-body"><p>{tr("Colabora con un proyecto, propón uno nuevo o apoya nuestro trabajo.", "Collaborate on a project, propose a new one or support our work.")}</p><ul><li>{tr("Proyectos conjuntos", "Joint projects")}</li><li>{tr("Mentoría y difusión", "Mentoring and outreach")}</li></ul></div><a class="btn btn-ghost" data-link="github" href="#">{tr("Hablemos en GitHub", "Talk to us on GitHub")}</a></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 13. PREGUNTAS -->

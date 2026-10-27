@@ -1,21 +1,6 @@
-import { defineConfig, devices } from "@playwright/test";
-
-const isCi = Boolean(process.env.CI);
-
-export default defineConfig({
-  testDir: "./tests/e2e",
-  forbidOnly: isCi,
-  retries: isCi ? 1 : 0,
-  reporter: isCi ? [["github"], ["html", { open: "never" }]] : "list",
-  use: {
-    baseURL: "http://localhost:3000",
-    trace: "on-first-retry",
-  },
-  webServer: {
-    // `next start` no funciona con `output: "export"`; en CI se sirve `out/` como lo hará Pages.
-    command: isCi ? "python3 -m http.server 3000 --directory out" : "pnpm dev",
-    url: "http://localhost:3000",
-    reuseExistingServer: !isCi,
-  },
-  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
+import { defineConfig, devices } from '@playwright/test';
+export default defineConfig({ testDir:'tests/e2e', use:{baseURL:'http://127.0.0.1:4321',reducedMotion:'reduce'}, // the animated 3D journey renders in software here; one test opts back in
+  timeout:60000,
+  projects:[{name:'desktop',use:{...devices['Desktop Chrome']}},{name:'mobile',use:{...devices['iPhone 13'],defaultBrowserType:'chromium'}}],
+  webServer:{command:'npm run preview -- --port 4321 --ignore-lock',url:'http://127.0.0.1:4321',reuseExistingServer:!process.env.CI},
 });

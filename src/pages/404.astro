@@ -1,0 +1,15 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { ui } from '../i18n/ui';
+const t = ui('es');
+---
+<SiteLayout title={`${t.missing} · Hexalis`} description={t.missingText} locale="es" noindex chrome={false}>
+  <main id="contenido" class="wrap not-found">
+    <h1>{t.missing}</h1>
+    <p>{t.missingText}</p>
+    <a class="btn btn-primary" href="/">{t.back}</a>
+  </main>
+</SiteLayout>
+<style>
+  .not-found { display: grid; gap: 24px; align-content: center; justify-items: start; min-height: 100svh; }
+</style>

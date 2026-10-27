@@ -1,0 +1,48 @@
+---
+import type { Locale } from '../../lib/routes';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = (es: string, en: string) => (locale === 'en' ? en : es);
+---
+<section class="sec" id="obras" aria-labelledby="obrasTitle">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <h2 id="obrasTitle">{tr("Dos librerías que encajan entre sí", "Two libraries that fit together")}</h2>
+        <p>{tr("Un sistema de diseño para construir productos y un kit para documentarlos. Puedes usarlas juntas o por separado, en proyectos personales o comerciales.", "A design system to build products and a kit to document them. Use them together or separately, in personal or commercial projects.")}</p>
+      </div>
+      <div class="bento">
+        <figure class="tile cover b-ds-cover tilt rise">
+          <img class="img-dark" src="/assets/ds-cover-dark.png" alt={tr("Portada de Hexalis Design System: panal de hexágonos con botones, interruptores y campos.", "Hexalis Design System cover: a honeycomb of hexagons with buttons, switches and fields.")} loading="lazy">
+          <img class="img-light" src="/assets/ds-cover-light.png" alt={tr("Portada de Hexalis Design System: panal de hexágonos con botones, interruptores y campos.", "Hexalis Design System cover: a honeycomb of hexagons with buttons, switches and fields.")} loading="lazy">
+        </figure>
+        <div class="tile info b-ds-info rise">
+          <div class="tile-title"><h3>Hexalis Design System</h3><span>v1.0.0 · MIT + CC BY 4.0</span></div>
+          <p class="facts-line"><span><strong>85</strong>{tr("componentes", "components")}</span><span><strong>6</strong>{tr("paletas", "palettes")}</span><span>{tr("claro y oscuro", "light and dark")}</span></p>
+          <p>{tr("Colores, tipografía, componentes y patrones que cada producto extiende con su propia paleta.", "Colors, type, components and patterns that each product extends with its own palette.")}</p>
+          <ol class="steps">
+            <li><span><strong>{tr("Duplica", "Duplicate")}</strong> {tr("el archivo en Figma y empieza en la página Map.", "the file in Figma and start on the Map page.")}</span></li>
+            <li><span><strong>{tr("Elige una paleta", "Pick a palette")}</strong> {tr("sin tocar los componentes.", "without touching the components.")}</span></li>
+            <li><span><strong>{tr("Copia los valores a tu código:", "Copy the values to your code:")}</strong> {tr("son variables CSS que empiezan con", "they are CSS variables starting with")} <code>--hx-</code>.</span></li>
+          </ol>
+          <div class="actions"><a class="btn btn-primary" data-link="dsFigma" href="#">{tr("Abrir en Figma", "Open in Figma")}</a><a class="btn btn-ghost" data-link="dsRepo" href="#">GitHub</a></div>
+        </div>
+        <div class="tile info b-ops-info rise">
+          <div class="tile-title"><h3>Hexalis Design Ops Toolkit</h3><span>v1.0.0 · CC BY 4.0</span></div>
+          <p class="facts-line"><span><strong>16</strong>{tr("plantillas", "templates")}</span><span><strong>6</strong>kits</span><span><strong>112</strong>{tr("componentes", "components")}</span></p>
+          <p>{tr("No diseña tu producto: te da una forma consistente de investigar, anotar, documentar y entregar.", "It does not design your product: it gives you a consistent way to research, annotate, document and hand off.")}</p>
+                    <ol class="steps">
+            <li><span><strong>{tr("Duplica", "Duplicate")}</strong> {tr("el Toolkit en Figma.", "the Toolkit in Figma.")}</span></li>
+            <li><span><strong>{tr("Copia", "Copy")}</strong> {tr("la plantilla de la fase en la que estás.", "the template for the phase you are in.")}</span></li>
+            <li><span><strong>{tr("Reemplaza", "Replace")}</strong> {tr("cada texto entre", "every text in")} <code>{tr("[corchetes]", "[brackets]")}</code>.</span></li>
+          </ol>
+          <div class="actions"><a class="btn btn-ops" data-link="opsFigma" href="#">{tr("Abrir en Figma", "Open in Figma")}</a><a class="btn btn-ghost" data-link="opsRepo" href="#">GitHub</a></div>
+        </div>
+        <figure class="tile cover b-ops-cover tilt rise">
+          <img class="img-dark" src="/assets/ops-cover-dark.png" alt={tr("Portada de Hexalis Design Ops Toolkit: ciclo de seis fases en hexágonos, de Set up a Review.", "Hexalis Design Ops Toolkit cover: a six-phase cycle in hexagons, from Set up to Review.")} loading="lazy">
+          <img class="img-light" src="/assets/ops-cover-light.png" alt={tr("Portada de Hexalis Design Ops Toolkit: ciclo de seis fases en hexágonos, de Set up a Review.", "Hexalis Design Ops Toolkit cover: a six-phase cycle in hexagons, from Set up to Review.")} loading="lazy">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. PLAYGROUND -->

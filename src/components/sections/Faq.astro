@@ -1,0 +1,20 @@
+---
+import type { Locale } from '../../lib/routes';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = (es: string, en: string) => (locale === 'en' ? en : es);
+---
+<section class="sec" id="preguntas" aria-labelledby="faqTitle">
+    <div class="wrap faq-wrap">
+      <div class="faq-aside rise"><h2 id="faqTitle"><span>{tr("Antes de empezar", "Before you start")}</span></h2><p>{tr("¿Tu duda no está aquí? Pregúntanos en", "Question not here? Ask us on")} <a data-link="github" href="#">GitHub</a>.</p></div>
+      <div class="faq rise">
+        <details open><summary>{tr("¿Por qué todo es gratis?", "Why is everything free?")}</summary><p>{tr("Porque creemos que el conocimiento es universal. Hexalis es una organización sin fines de lucro y su objetivo es aportar a la comunidad, no vender.", "Because we believe knowledge is universal. Hexalis is a non-profit and its goal is to give back to the community, not to sell.")}</p></details>
+        <details><summary>{tr("¿Puedo usar las librerías en proyectos comerciales?", "Can I use the libraries in commercial projects?")}</summary><p>{tr("Sí. El código y las variables de diseño usan licencia MIT y los archivos de Figma y la documentación usan CC BY 4.0. Ambas permiten uso comercial; CC BY 4.0 pide dar crédito a Hexalis.", "Yes. Code and design variables use the MIT license and the Figma files and documentation use CC BY 4.0. Both allow commercial use; CC BY 4.0 asks you to credit Hexalis.")}</p></details>
+        <details><summary>{tr("¿Necesito un plan de pago de Figma?", "Do I need a paid Figma plan?")}</summary><p>{tr("No para empezar. Con el plan gratuito trabajas dentro de tu copia del archivo. Con un plan Professional o superior puedes publicarlo como librería de equipo.", "Not to start. With the free plan you work inside your copy of the file. With a Professional plan or higher you can publish it as a team library.")}</p></details>
+        <details><summary>{tr("¿Hexalis tiene relación con la NASA?", "Is Hexalis related to NASA?")}</summary><p>{tr("No. Participamos en el NASA Space Apps Challenge con un proyecto propio que usa datos abiertos de la NASA. No estamos afiliados a la NASA ni contamos con su respaldo.", "No. We take part in the NASA Space Apps Challenge with our own project that uses NASA open data. We are not affiliated with or endorsed by NASA.")}</p></details>
+        <details><summary>{tr("¿Cómo puedo contribuir?", "How can I contribute?")}</summary><p>{tr("Elige tu camino en la sección Súmate. Para diseño, empieza duplicando las librerías; para código, sigue la organización en GitHub: avisaremos cuando abramos las primeras tareas.", "Pick your path in the Join section. For design, start by duplicating the libraries; for code, follow the organization on GitHub: we will announce the first open tasks.")}</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14. CIERRE: la celda libre -->

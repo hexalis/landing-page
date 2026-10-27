@@ -1,0 +1,30 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Journey from '../components/sections/Journey.astro';
+import Works from '../components/sections/Works.astro';
+import Playground from '../components/sections/Playground.astro';
+import Projects from '../components/sections/Projects.astro';
+import Log from '../components/sections/Log.astro';
+import Team from '../components/sections/Team.astro';
+import Join from '../components/sections/Join.astro';
+import Faq from '../components/sections/Faq.astro';
+import Finale from '../components/sections/Finale.astro';
+import { ui } from '../i18n/ui';
+import type { Locale } from '../lib/routes';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = ui(locale);
+---
+<SiteLayout title={t.title} description={t.description} shareDescription={t.shareDescription} locale={locale}>
+  <main id="contenido">
+    <Journey locale={locale} />
+    <Works locale={locale} />
+    <Playground locale={locale} />
+    <Projects locale={locale} />
+    <Log locale={locale} />
+    <Team locale={locale} />
+    <Join locale={locale} />
+    <Faq locale={locale} />
+    <Finale locale={locale} />
+  </main>
+</SiteLayout>

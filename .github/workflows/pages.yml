@@ -1,6 +1,5 @@
-# Publica el export estático de Next (`out/`) en GitHub Pages (hexalis.org).
-# Requiere Settings → Pages → Source: GitHub Actions. El dominio propio sirve en la raíz,
-# así que no hace falta basePath; si se quita el dominio, añade basePath "/landing-page".
+# Publica el build estático de Astro (`dist/`) en GitHub Pages (hexalis.org).
+# Requiere Settings → Pages → Source: GitHub Actions. El dominio propio sirve en la raíz.
 name: Pages
 
 on:
@@ -23,17 +22,18 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
-      - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm build
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+        env:
+          SITE_URL: https://hexalis.org
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:
-          path: ./out
+          path: ./dist
 
   deploy:
     needs: build
