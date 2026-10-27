@@ -57,7 +57,7 @@ npm run test:e2e
 
 ## Security
 
-Astro emits a Content Security Policy per page (`security.csp` in `astro.config.ts`) with hashes for its scripts and styles. Allowed connections: `api.github.com` (contributors) and `avatars.githubusercontent.com` (photos). Inline `style` attributes are allowed because sections set per-element custom properties. If presence over WebSocket is enabled (`LIVE.presenceUrl`), add its origin to `connect-src`.
+Astro emits a Content Security Policy per page (`security.csp` in `astro.config.ts`) with hashes for its scripts and styles. Allowed connections: `api.github.com` (contributors), `avatars.githubusercontent.com` (photos) and Cloudflare Web Analytics (`static.cloudflareinsights.com` script, `cloudflareinsights.com` beacon), which the host injects. If analytics are turned off in Cloudflare, remove those two origins. Inline `style` attributes are allowed because sections set per-element custom properties. If presence over WebSocket is enabled (`LIVE.presenceUrl`), add its origin to `connect-src`.
 
 ## Learn more
 

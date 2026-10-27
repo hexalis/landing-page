@@ -199,11 +199,19 @@ body.in-journey .me { opacity: 0; }
 /* Obras: rejilla de distintos tamaños */
 .bento { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; }
 .tile { position: relative; min-width: 0; border-radius: var(--r-lg); background: var(--surface); overflow: hidden; }
-.tile.cover { aspect-ratio: 16 / 9; align-self: start; width: 100%; min-width: 0; }
+/* el fondo es el tono medio de cada portada: mientras se revela no queda una caja vacía */
+.tile.cover { aspect-ratio: 16 / 9; align-self: start; width: 100%; min-width: 0; background: var(--cover-bg, var(--surface)); }
+.b-ds-cover { --cover-bg: #161D2F; } .b-ops-cover { --cover-bg: #0F131B; }
+:root[data-theme="light"] .b-ds-cover { --cover-bg: #E0E4F1; } :root[data-theme="light"] .b-ops-cover { --cover-bg: #ECF0F4; }
 .tile.cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.001); transition: transform 700ms var(--ease-out); }
 @media (hover: hover) and (pointer: fine) { .tile.cover:hover img { transform: scale(1.035); } }
 .img-light { display: none !important; }
 :root[data-theme="light"] .img-light { display: block !important; } :root[data-theme="light"] .img-dark { display: none !important; }
+/* sin elección guardada manda el sistema, igual que los tokens */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .img-light { display: block !important; } :root:not([data-theme="dark"]) .img-dark { display: none !important; }
+  :root:not([data-theme="dark"]) .b-ds-cover { --cover-bg: #E0E4F1; } :root:not([data-theme="dark"]) .b-ops-cover { --cover-bg: #ECF0F4; }
+}
 .tile.info { padding: clamp(28px, 2.6vw, 40px); display: flex; flex-direction: column; gap: 22px; }
 .tile.info .actions { margin-top: auto; }
 .facts-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 22px; font-size: var(--t-small); color: var(--muted); }
@@ -267,6 +275,8 @@ html.vt-fade::view-transition-old(root), html.vt-fade::view-transition-new(root)
 .pg { position: relative; }
 .guide { z-index: 20; opacity: 0; transition: opacity var(--dur-fast) ease; }
 .guide.on { opacity: 1; }
+/* junto al borde derecho: la flecha se refleja con la punta en el mismo lugar y la etiqueta pasa a la izquierda */
+.guide.flip > svg { transform: translateX(-18px) scaleX(-1); } .guide.flip > b { position: absolute; top: 0; right: 32px; margin: 16px 0 0; }
 /* el guía vive dentro de .pg, que también es .rise: sin esto heredaba la opacidad 1 de la entrada y no se apagaba al terminar */
 .js .pg.rise > .guide, .js .pg.rise.in > .guide { opacity: 0; transition: opacity var(--dur-fast) ease; transition-delay: 0ms; }
 .js .pg.rise.in > .guide.on { opacity: 1; }
@@ -626,7 +636,7 @@ input, textarea { caret-color: var(--accent); }
 .js .sec-head.rise.in > h2.masked > .mask-in { transform: none; transition: transform 700ms var(--ease-out); }
 /* Portadas que se descubren de abajo hacia arriba */
 .js .tile.cover.rise > * { opacity: 1; transform: scale(1.06); clip-path: inset(100% 0 0 0); }
-.js .tile.cover.rise.in > * { transform: scale(1.001); clip-path: inset(0 0 0 0); transition: clip-path 800ms var(--ease-io), transform 1s var(--ease-out); }
+.js .tile.cover.rise.in > * { transform: scale(1.001); clip-path: inset(0 0 0 0); transition: clip-path 520ms var(--ease-io), transform 700ms var(--ease-out); }
 .js .tile.cover.rise.in.revealed > * { transition: clip-path 800ms var(--ease-io), transform 700ms var(--ease-out); }
 .no-motion-js .rise > * { opacity: 1 !important; transform: none !important; }
 .js .hero .line, .js .hero-foot, .js .building { animation: heroIn 1s var(--ease-out) both; }
