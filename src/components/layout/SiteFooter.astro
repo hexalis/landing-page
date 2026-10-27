@@ -1,0 +1,19 @@
+---
+import type { Locale } from '../../lib/routes';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = (es: string, en: string) => (locale === 'en' ? en : es);
+---
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="logo" href="#inicio"><svg aria-hidden="true"><use href="#cube"/></svg>Hexalis <small>ORG</small></a>
+        <p>{tr("Organización open source y sin fines de lucro. Nacimos en Nicaragua; lo que hacemos es para cualquier persona, en cualquier lugar. No estamos afiliados a la NASA. Código bajo licencia MIT; diseño y documentación bajo CC BY 4.0.", "An open-source non-profit. Born in Nicaragua; what we make is for anyone, anywhere. Not affiliated with NASA. Code under the MIT license; design and documentation under CC BY 4.0.")}</p>
+      </div>
+      <div><h3>{tr("Obras", "Work")}</h3><ul><li><a data-link="dsFigma" href="#">Hexalis Design System</a></li><li><a data-link="opsFigma" href="#">Design Ops Toolkit</a></li><li><a href="#playground">{tr("Prueba en vivo", "Live demo")}</a></li></ul></div>
+      <div><h3>{tr("Organización", "Organization")}</h3><ul><li><a href="#proyectos">{tr("Proyectos", "Projects")}</a></li><li><a href="#bitacora">{tr("Bitácora", "Log")}</a></li><li><a href="#equipo">{tr("Equipo", "Team")}</a></li><li><a href="#sumate">{tr("Súmate", "Join")}</a></li><li><a data-link="github" href="#">GitHub</a></li></ul></div>
+    </div>
+    <div class="foot-bottom"><span>{tr("© 2026 Hexalis · Hecho con Hexalis Design System ·", "© 2026 Hexalis · Made with Hexalis Design System ·")} <a class="lang-link" href={tr("/en/", "/")} hreflang={tr("en", "es")} lang={tr("en", "es")}>{tr("English", "Español")}</a></span><span class="foot-actions"><span class="kbd-hint">{tr("Pulsa", "Press")} <kbd>Ctrl K</kbd> {tr("para las acciones rápidas", "for quick actions")}</span><button class="motion-btn" type="button" id="motionBtn" aria-pressed="false"><svg class="pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg><svg class="play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5v14l12-7z"/></svg><span>{tr("Pausar movimiento", "Pause motion")}</span></button></span></div>
+  </div>
+</footer>

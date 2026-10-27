@@ -1,0 +1,31 @@
+---
+import '../styles/global.css';
+import SeoHead from '../components/seo/SeoHead.astro';
+import SiteChrome from '../components/layout/SiteChrome.astro';
+import SiteFooter from '../components/layout/SiteFooter.astro';
+import CommandPalette from '../components/ui/CommandPalette.astro';
+import type { Locale } from '../lib/routes';
+interface Props { title: string; description: string; shareDescription?: string; locale: Locale; path?: string; noindex?: boolean; chrome?: boolean }
+const { title, description, shareDescription = description, locale, path = '', noindex = false, chrome = true } = Astro.props;
+---
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <!-- Marks JS as available before first paint; if app.js never boots, motion falls back to the static design. -->
+    <script is:inline>document.documentElement.classList.add("js");setTimeout(function(){if(!window.HX_OK)document.documentElement.classList.add("no-motion-js")},3000)</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
+    <meta name="theme-color" content="#06080F" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F3F4F8" media="(prefers-color-scheme: light)" />
+    <meta name="color-scheme" content="dark light" />
+    <SeoHead title={title} description={description} shareDescription={shareDescription} locale={locale} path={path} noindex={noindex} />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Cpath d='M17 2 30 9.5 17 17 4 9.5Z' fill='%237A9FEB'/%3E%3Cpath d='M4 9.5 17 17v15L4 24.5Z' fill='%232E4383'/%3E%3Cpath d='M30 9.5 17 17v15l13-7.5Z' fill='%234064C6'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    {chrome && <SiteChrome locale={locale} />}
+    <slot />
+    {chrome && <SiteFooter locale={locale} />}
+    {chrome && <CommandPalette locale={locale} />}
+    {chrome && <script src="../scripts/app.js"></script>}
+  </body>
+</html>

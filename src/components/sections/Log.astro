@@ -1,0 +1,30 @@
+---
+import type { Locale } from '../../lib/routes';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = (es: string, en: string) => (locale === 'en' ? en : es);
+---
+<section class="sec" id="bitacora" aria-labelledby="logTitle">
+    <div class="wrap log-wrap">
+      <div class="sec-head rise">
+        <h2 id="logTitle">{tr("Dos ideas, una organización", "Two ideas, one organization")}</h2>
+        <p>{tr("En 16 días, dos librerías que nacieron por separado se volvieron Hexalis. Fechas reales, tomadas del historial de cambios de cada una.", "In 16 days, two libraries born separately became Hexalis. Real dates, taken from each one’s change history.")}</p>
+        <div class="log-now" aria-hidden="true"><span class="log-day" id="logDay">{tr("3 oct", "Oct 3")}</span><span class="log-count" id="logCount">{tr("Día 1", "Day 1")}</span></div>
+        <div class="log-legend" aria-hidden="true"><span class="k ds">Design System</span><span class="k ops">Design Ops Toolkit</span><span class="k org">{tr("Organización", "Organization")}</span></div>
+        <p class="log-src">{tr("Fuente: el historial de cambios de cada librería y la fecha de creación de la organización en GitHub.", "Source: each library’s change history and the organization’s creation date on GitHub.")}</p>
+      </div>
+      <div class="log" id="log">
+        <ol class="log-list">
+          <li class="log-row" data-lane="org"><span class="node"></span><time datetime="2026-10-03">{tr("3 oct 2026", "Oct 3, 2026")}</time><div data-act={tr("El comienzo", "The beginning")}><strong>{tr("Nace Hexalis en GitHub", "Hexalis is born on GitHub")}</strong><p>{tr("Se crea la organización para reunir los proyectos del equipo.", "The organization is created to bring the team’s projects together.")}</p></div></li>
+          <li class="log-row" data-lane="ops"><span class="node"></span><time datetime="2026-10-11">{tr("11 oct", "Oct 11")}</time><div data-act={tr("Dos ideas por separado", "Two separate ideas")}><strong>{tr("Primera versión del kit de documentación", "First version of the documentation kit")}</strong><p>{tr("Nace, entonces con otro nombre, como un método para documentar productos en Figma.", "Born, under another name back then, as a method to document products in Figma.")}</p></div><span class="tag">v1.0.0</span></li>
+          <li class="log-row" data-lane="ds"><span class="node"></span><time datetime="2026-10-12">{tr("12 oct", "Oct 12")}</time><div><strong>{tr("Arranca el sistema de diseño", "The design system starts")}</strong><p>{tr("Base, fundamentos y componentes esenciales.", "Base, foundations and essential components.")}</p></div><span class="tag">0.1 → 0.3</span></li>
+          <li class="log-row" data-lane="ops"><span class="node"></span><time datetime="2026-10-12">{tr("12 oct", "Oct 12")}</time><div><strong>{tr("Cuatro versiones en un día", "Four versions in one day")}</strong><p>{tr("El kit pasa de la 1.3 a la 2.2.", "The kit goes from 1.3 to 2.2.")}</p></div><span class="tag">1.3 → 2.2</span></li>
+          <li class="log-row" data-lane="ds"><span class="node"></span><time datetime="2026-10-14">{tr("14 oct", "Oct 14")}</time><div><strong>{tr("Componentes avanzados, gráficos e ilustraciones", "Advanced components, charts and illustrations")}</strong><p>{tr("Fases 3 a 5 del plan, hasta la primera versión estable.", "Phases 3 to 5 of the plan, up to the first stable version.")}</p></div><span class="tag">0.4 → 1.0</span></li>
+          <li class="log-row" data-lane="ds"><span class="node"></span><time datetime="2026-10-15">{tr("15 oct", "Oct 15")}</time><div><strong>{tr("Plan v2: limpieza y fundamentos completos", "Plan v2: cleanup and complete foundations")}</strong><p>{tr("Se ordena todo para que cada pieza se encuentre fácil.", "Everything gets organized so every piece is easy to find.")}</p></div><span class="tag">1.1 → 2.0</span></li>
+          <li class="log-row" data-lane="ops"><span class="node"></span><time datetime="2026-10-18">{tr("18 oct", "Oct 18")}</time><div><strong>{tr("El kit cambia de nombre", "The kit gets a new name")}</strong><p>{tr("El anterior ya lo usaban otros productos.", "The old one was already used by other products.")}</p></div><span class="tag">3.0.0</span></li>
+          <li class="log-row merge" data-lane="org"><span class="node"></span><time datetime="2026-10-19">{tr("19 oct", "Oct 19")}</time><div data-act={tr("Se vuelven una", "They become one")}><strong>{tr("Las dos librerías se vuelven Hexalis", "The two libraries become Hexalis")}</strong><p>{tr("Design System y Design Ops Toolkit reinician en v1.0.0, cada una con sus propias variables de diseño, así pueden usarse juntas en un mismo producto sin interferir.", "Design System and Design Ops Toolkit restart at v1.0.0, each with its own design variables, so they can be used together in the same product without clashing.")}</p></div><span class="tag strong">v1.0.0</span></li>
+          <li class="log-row now" data-lane="org"><span class="node"></span><time>{tr("Ahora", "Now")}</time><div data-act={tr("Lo que sigue", "What comes next")}><strong>{tr("Space Apps y este portal", "Space Apps and this site")}</strong><p>{tr("Dos proyectos en marcha, hechos con las dos librerías.", "Two projects under way, made with both libraries.")}</p></div><span class="tag">{tr("En curso", "Ongoing")}</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>

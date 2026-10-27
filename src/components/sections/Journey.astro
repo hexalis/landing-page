@@ -1,0 +1,103 @@
+---
+import type { Locale } from '../../lib/routes';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = (es: string, en: string) => (locale === 'en' ? en : es);
+---
+<div class="journey" id="historia">
+  <div class="stage3d" id="stage3d" aria-hidden="true">
+    <svg class="stage-fallback" id="stageFallback" viewBox="0 0 520 560" aria-hidden="true"></svg>
+    <canvas id="hex3d"></canvas>
+    <div class="labels3d" id="labels3d"></div>
+  </div>
+
+  <!-- 1. HERO -->
+  <section class="ch hero" id="inicio" aria-labelledby="heroTitle">
+    <div class="wrap">
+      <h1 id="heroTitle"><span class="line">{tr("El conocimiento", "Knowledge")}</span> <span class="line accent">{tr("es universal.", "is universal.")}</span></h1>
+      <div class="hero-foot">
+        <p class="lede">{tr("Hexalis es una organización sin fines de lucro que diseña y programa proyectos open source, para que cualquier persona pueda usar, estudiar y mejorar lo que hacemos.", "Hexalis is a non-profit that designs and builds open source projects, so anyone can use, study and improve what we make.")}</p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="#abierto">{tr("Conocer la visión", "See the vision")} <svg class="down" aria-hidden="true"><use href="#i-down"/></svg></a>
+          <a class="btn btn-ghost" href="#sistema">{tr("Ver lo que construimos", "See what we build")}</a>
+        </div>
+        <div class="presence"><span class="faces" id="heroFaces"></span><span class="live" id="liveCount">{tr("6 en el equipo", "6 on the team")}</span><span id="peers" hidden></span><span aria-hidden="true">·</span><span>MIT + CC BY 4.0</span></div>
+      </div>
+      <aside class="building glass" aria-labelledby="buildingTitle">
+        <h2 id="buildingTitle">{tr("Lo que estamos creando ahora", "What we are making now")}</h2>
+        <ul>
+          <li><a href="#space"><strong>NASA Space Apps 2026</strong><small>{tr("Visor de eventos naturales", "Natural events viewer")}</small><span class="pill warn">{tr("En desarrollo", "In development")}</span></a></li>
+          <li><a href="#proyectos"><strong>Portal Hexalis</strong><small>{tr("Este sitio", "This site")}</small><span class="pill ds">{tr("En diseño", "In design")}</span></a></li>
+          <li><a href="#sumate"><strong>{tr("Tu proyecto", "Your project")}</strong><small>{tr("Propón una idea", "Propose an idea")}</small><span class="pill ops">{tr("Abierto", "Open")}</span></a></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 2. LA VISIÓN: la celda se abre en tres principios -->
+  <section class="ch" id="abierto" aria-labelledby="chOpenTitle">
+    <div class="wrap">
+      <div class="panel glass rise">
+        <h2 id="chOpenTitle">{tr("Por eso lo hacemos open source", "That is why we make it open source")}</h2>
+        <p>{tr("Archivos de Figma, código, documentación y las decisiones detrás de cada pieza quedan públicos, con licencias que permiten usarlos incluso en proyectos comerciales.", "Figma files, code, documentation and the decisions behind every piece are public, with licenses that allow using them even in commercial projects.")}</p>
+        <ul class="principles">
+          <li><svg viewBox="0 0 100 115.47" aria-hidden="true"><path d="M57.8 4.5 L92.2 24.4 Q100.0 28.9 100.0 37.9 L100.0 77.6 Q100.0 86.6 92.2 91.1 L57.8 111.0 Q50.0 115.5 42.2 111.0 L7.8 91.1 Q0.0 86.6 0.0 77.6 L0.0 37.9 Q0.0 28.9 7.8 24.4 L42.2 4.5 Q50.0 0.0 57.8 4.5Z" fill="var(--p600)"/></svg><strong>{tr("Open source por defecto", "Open source by default")}</strong><span>{tr("Archivos, código y decisiones públicas, con licencias claras.", "Public files, code and decisions, with clear licenses.")}</span></li>
+          <li><svg viewBox="0 0 100 115.47" aria-hidden="true"><path d="M57.8 4.5 L92.2 24.4 Q100.0 28.9 100.0 37.9 L100.0 77.6 Q100.0 86.6 92.2 91.1 L57.8 111.0 Q50.0 115.5 42.2 111.0 L7.8 91.1 Q0.0 86.6 0.0 77.6 L0.0 37.9 Q0.0 28.9 7.8 24.4 L42.2 4.5 Q50.0 0.0 57.8 4.5Z" fill="var(--ops)"/></svg><strong>{tr("Documentado de principio a fin", "Documented end to end")}</strong><span>{tr("Cada pieza explica cómo usarla y por qué existe.", "Every piece explains how to use it and why it exists.")}</span></li>
+          <li><svg viewBox="0 0 100 115.47" aria-hidden="true"><path d="M57.8 4.5 L92.2 24.4 Q100.0 28.9 100.0 37.9 L100.0 77.6 Q100.0 86.6 92.2 91.1 L57.8 111.0 Q50.0 115.5 42.2 111.0 L7.8 91.1 Q0.0 86.6 0.0 77.6 L0.0 37.9 Q0.0 28.9 7.8 24.4 L42.2 4.5 Q50.0 0.0 57.8 4.5Z" fill="var(--h3)"/></svg><strong>{tr("Accesible como objetivo", "Accessible as a goal")}</strong><span>{tr("WCAG 2.2 AA como meta, en modo claro y oscuro.", "WCAG 2.2 AA as the target, in light and dark mode.")}</span></li>
+        </ul>
+        <p class="note">{tr("Código y variables de diseño bajo MIT. Diseño y documentación bajo CC BY 4.0.", "Code and design variables under MIT. Design and documentation under CC BY 4.0.")}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. EL EQUIPO: la idea la sostienen seis personas -->
+  <section class="ch right" id="seis" aria-labelledby="ch1Title">
+    <div class="wrap">
+      <div class="panel glass rise">
+        <h2 id="ch1Title">{tr("Seis personas, un mismo panal", "Six people, one hive")}</h2>
+        <p>{tr("Diseño, frontend, datos, documentación, comunidad e investigación sobre los mismos archivos. Cada celda es alguien del equipo.", "Design, frontend, data, documentation, community and research on the same files. Every cell is someone on the team.")}</p>
+        <div class="team-row"><span class="faces" id="chFaces"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. EL DESIGN SYSTEM: seis celdas arman el panal -->
+  <section class="ch" id="sistema" aria-labelledby="ch2Title">
+    <div class="wrap">
+      <div class="panel glass rise">
+        <h2 id="ch2Title">{tr("Juntas arman un sistema que encaja", "Together they build a system that fits")}</h2>
+        <div><div class="big" data-count="85">85</div><p>{tr("componentes en Hexalis Design System", "components in Hexalis Design System")}</p></div>
+        <div class="facts"><div><strong>6</strong><span>{tr("paletas de marca", "brand palettes")}</span></div><div><strong data-count="1614">1.614</strong><span>{tr("variantes en Figma", "variants in Figma")}</span></div><div><strong>2</strong><span>{tr("temas, claro y oscuro", "themes, light and dark")}</span></div></div>
+        <p>{tr("Colores, tipografía, componentes y patrones que cada producto extiende con su propia paleta.", "Colors, type, components and patterns that each product extends with its own palette.")}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. EL MÉTODO: el panal se ordena en un ciclo -->
+  <section class="ch right" id="metodo" aria-labelledby="ch3Title">
+    <div class="wrap">
+      <div class="panel glass rise">
+        <h2 id="ch3Title">{tr("Cada proyecto sigue el mismo ciclo", "Every project follows the same cycle")}</h2>
+        <p>{tr("Usamos nuestro propio Design Ops Toolkit en todo lo que hacemos. Cada fase tiene sus plantillas, así cualquier persona puede retomar el trabajo donde quedó.", "We use our own Design Ops Toolkit in everything we do. Each phase has its templates, so anyone can pick up the work where it was left.")}</p>
+        <ol class="phase-list" aria-label={tr("Las seis fases del ciclo", "The six phases of the cycle")}>
+          <li><b>Set up <em>{tr("preparar", "prepare")}</em></b><span>{tr("2 plantillas", "2 templates")}</span></li><li><b>Discover <em>{tr("investigar", "research")}</em></b><span>{tr("2 plantillas", "2 templates")}</span></li><li><b>Design <em>{tr("diseñar", "design")}</em></b><span>{tr("6 plantillas", "6 templates")}</span></li>
+          <li><b>Deliver <em>{tr("entregar", "hand off")}</em></b><span>{tr("3 plantillas", "3 templates")}</span></li><li><b>Share <em>{tr("compartir", "share")}</em></b><span>{tr("2 plantillas", "2 templates")}</span></li><li><b>Review <em>{tr("revisar", "review")}</em></b><span>{tr("1 plantilla", "1 template")}</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. LOS PROYECTOS: el ciclo se curva en un planeta -->
+  <section class="ch" id="space" aria-labelledby="ch4Title">
+    <div class="wrap">
+      <div class="panel glass rise">
+        <h2 id="ch4Title">{tr("Un mundo de proyectos por construir", "A world of projects to build")}</h2>
+        <p>{tr("Todo lo anterior sirve para construir cosas útiles. Cada celda encendida es un proyecto en marcha, y una puede ser el tuyo.", "All of this exists to build useful things. Every lit cell is a project under way, and one could be yours.")}</p>
+        <a class="more" href="#proyectos">{tr("Ver los proyectos", "See the projects")} <span class="arr" aria-hidden="true">→</span></a>
+        <p class="note">{tr("Space Apps es un proyecto independiente. Hexalis no está afiliada a la NASA ni cuenta con su respaldo.", "Space Apps is an independent project. Hexalis is not affiliated with or endorsed by NASA.")}</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+  <!-- 7. OBRAS -->

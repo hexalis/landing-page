@@ -1,0 +1,19 @@
+---
+import type { Locale } from '../../lib/routes';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = (es: string, en: string) => (locale === 'en' ? en : es);
+---
+<section class="finale" aria-labelledby="finTitle">
+    <div class="wrap">
+      <div class="finale-grid">
+        <div class="rise">
+          <h2 id="finTitle">{tr("La siguiente pieza puede ser tuya.", "The next piece could be yours.")}</h2>
+          <p>{tr("Usa lo que ya hicimos, mejóralo o propón un proyecto nuevo. Todo lo que construimos es open source y queda para la comunidad.", "Use what we made, improve it or propose a new project. Everything we build is open source and belongs to the community.")}</p>
+          <div class="ctas"><a class="btn btn-primary" href="#sumate">{tr("Súmate", "Join")} <svg class="go" aria-hidden="true"><use href="#i-go"/></svg></a><a class="btn btn-ghost" data-link="github" href="#">{tr("Ir a GitHub", "Go to GitHub")}</a></div>
+        </div>
+        <svg class="comb" id="comb" viewBox="0 0 520 420" role="img" aria-label={tr("Un panal de hexágonos con una celda vacía resaltada: la siguiente pieza.", "A honeycomb of hexagons with one empty cell highlighted: the next piece.")}></svg>
+      </div>
+      <span class="wordmark" id="wordmark" data-word="Hexalis" aria-hidden="true"></span>
+    </div>
+  </section>

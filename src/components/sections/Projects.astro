@@ -1,0 +1,41 @@
+---
+import type { Locale } from '../../lib/routes';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = (es: string, en: string) => (locale === 'en' ? en : es);
+---
+<section class="sec" id="proyectos" aria-labelledby="projTitle">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <h2 id="projTitle">{tr("Lo que estamos construyendo", "What we are building")}</h2>
+        <p>{tr("Como en nuestro propio tablero: lo que ya puedes usar, lo que está en marcha y el espacio que espera la próxima idea.", "Like our own board: what you can use today, what is under way and the space waiting for the next idea.")}</p>
+      </div>
+      <div class="board rise">
+        <div class="lane">
+          <div class="lane-head"><h3>{tr("Para usar hoy", "Ready to use")}</h3><span>2</span></div>
+          <article class="pcard"><span class="pill ok">{tr("Disponible · v1.0.0", "Available · v1.0.0")}</span><h4>Hexalis Design System</h4><p>{tr("85 componentes en claro y oscuro, con 6 paletas.", "85 components in light and dark, with 6 palettes.")}</p><a class="more" href="#obras">{tr("Ver la obra", "See the work")} <span class="arr" aria-hidden="true">→</span></a></article>
+          <article class="pcard"><span class="pill ok">{tr("Disponible · v1.0.0", "Available · v1.0.0")}</span><h4>Hexalis Design Ops Toolkit</h4><p>{tr("6 kits y 16 plantillas para documentar cualquier producto.", "6 kits and 16 templates to document any product.")}</p><a class="more" href="#obras">{tr("Ver la obra", "See the work")} <span class="arr" aria-hidden="true">→</span></a></article>
+        </div>
+        <div class="lane">
+          <div class="lane-head"><h3>{tr("En marcha", "Under way")}</h3><span>2</span></div>
+          <article class="pcard feature" id="p-spaceapps">
+            <div class="pcard-art" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <span class="pill warn">{tr("En desarrollo", "In development")}</span><h4>{tr("Visor de eventos naturales", "Natural events viewer")}</h4>
+            <p>{tr("Una herramienta para explorar los datos abiertos de eventos naturales de la NASA, creada para el NASA Space Apps Challenge 2026 con Hexalis Design System.", "A tool to explore NASA open data on natural events, made for the NASA Space Apps Challenge 2026 with Hexalis Design System.")}</p>
+            <a class="more" data-link="spaceApps" href="#">{tr("Seguir el proyecto", "Follow the project")} <span class="arr" aria-hidden="true">→</span></a>
+          </article>
+          <article class="pcard" id="p-portal"><span class="pill ds">{tr("En diseño", "In design")}</span><h4>Portal Hexalis</h4><p>{tr("Este sitio, diseñado con nuestro propio sistema y documentado con el Toolkit.", "This site, designed with our own system and documented with the Toolkit.")}</p></article>
+        </div>
+        <div class="lane open">
+          <div class="lane-head"><h3>{tr("Por construir", "To build")}</h3><span>+</span></div>
+          <a class="pcard slot" id="p-next" href="#sumate">
+            <svg class="slot-hex" viewBox="0 0 104 120" aria-hidden="true"><path class="slot-line" d="M59.6 8.4 L92.9 27.6 Q100.5 32.0 100.5 40.7 L100.5 79.3 Q100.5 88.0 92.9 92.4 L59.6 111.6 Q52.0 116.0 44.4 111.6 L11.1 92.4 Q3.5 88.0 3.5 79.3 L3.5 40.7 Q3.5 32.0 11.1 27.6 L44.4 8.4 Q52.0 4.0 59.6 8.4Z"/></svg>
+            <h4>{tr("Tu proyecto puede ser el siguiente", "Your project could be next")}</h4><p>{tr("¿Tienes una idea útil para la comunidad? Proponla y la construimos juntos, como open source.", "Have an idea that helps the community? Propose it and we will build it together, as open source.")}</p>
+            <span class="more">{tr("Proponer una idea", "Propose an idea")} <span class="arr" aria-hidden="true">→</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. BITÁCORA -->

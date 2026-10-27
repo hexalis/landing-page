@@ -1,0 +1,20 @@
+---
+import type { Locale } from '../../lib/routes';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = (es: string, en: string) => (locale === 'en' ? en : es);
+---
+<div class="cmdk" id="cmdk" hidden>
+  <div class="cmdk-panel glass" role="dialog" aria-modal="true" aria-label={tr("Acciones rápidas", "Quick actions")}>
+    <label class="cmdk-input"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="cmdkInput" type="text" placeholder={tr("Ir a una sección, cambiar paleta o tema…", "Go to a section, change palette or theme…")} autocomplete="off" aria-controls="cmdkList" aria-label={tr("Buscar acción", "Search action")}><kbd>Esc</kbd></label>
+    <ul class="cmdk-list" id="cmdkList" role="listbox"></ul>
+    <div class="cmdk-foot"><span><kbd>↑</kbd> <kbd>↓</kbd> {tr("moverse", "move")}</span><span><kbd>Enter</kbd> {tr("elegir", "choose")}</span></div>
+  </div>
+</div>
+
+<!-- =========================================================
+     Escena 3D: el panal que se arma (Three.js r160)
+     Un InstancedMesh de prismas hexagonales con cinco estados:
+     0 una celda · 1 seis personas · 2 el panal · 3 el ciclo · 4 el planeta
+     El scroll elige el estado; cada celda viaja con su propio retraso.
+     ========================================================= -->

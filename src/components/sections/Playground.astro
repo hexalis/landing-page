@@ -1,0 +1,63 @@
+---
+import type { Locale } from '../../lib/routes';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const tr = (es: string, en: string) => (locale === 'en' ? en : es);
+---
+<section class="sec" id="playground" aria-labelledby="pgTitle">
+    <div class="wrap">
+      <div class="sec-head pg-head rise">
+        <h2 id="pgTitle">{tr("Ahora el cursor es tuyo", "Now the cursor is yours")}</h2>
+        <p>{tr("Cambia la marca, mueve las piezas y publica. Cambian los colores y las formas; los componentes siguen siendo legibles.", "Change the brand, move the pieces and publish. Colors and shapes change; the components stay readable.")}</p>
+      </div>
+      <div class="pg rise">
+        <div class="pg-bar" role="toolbar" aria-label={tr("Controles de la prueba en vivo", "Live demo controls")}>
+          <div class="pg-group"><span class="label">{tr("Paleta", "Palette")} <b id="pgPalName">Espectral</b></span><div class="swatches" id="swatches" role="group" aria-label={tr("Paletas del Design System", "Design System palettes")}></div></div>
+          <div class="pg-group"><span class="label">{tr("Tema", "Theme")}</span><div class="seg" id="stageTheme" role="group" aria-label={tr("Tema del lienzo", "Canvas theme")}><button type="button" data-v="dark" aria-pressed="true">{tr("Oscuro", "Dark")}</button><button type="button" data-v="light" aria-pressed="false">{tr("Claro", "Light")}</button></div></div>
+          <div class="pg-group"><span class="label">{tr("Esquinas", "Corners")}</span><div class="seg" id="stageRadius" role="group" aria-label={tr("Esquinas de los componentes", "Component corners")} style="--n: 3" data-v="1"><button type="button" data-v="sharp" aria-pressed="false">{tr("Rectas", "Sharp")}</button><button type="button" data-v="soft" aria-pressed="true">{tr("Suaves", "Soft")}</button><button type="button" data-v="round" aria-pressed="false">{tr("Redondas", "Round")}</button></div></div>
+          <div class="pg-end">
+            <ol class="pg-steps" id="pgSteps" aria-label={tr("Tres pasos", "Three steps")}><li data-step="palette">{tr("Paleta", "Palette")}</li><li data-step="move">{tr("Mueve", "Move")}</li><li data-step="publish">{tr("Publica", "Publish")}</li></ol>
+            <button class="btn btn-primary pg-publish" id="pgPublish" type="button">{tr("Publicar", "Publish")}</button>
+          </div>
+        </div>
+        <p class="pg-turn" id="pgTurn" aria-live="polite"></p>
+        <div class="stage" data-ui id="stage" data-stage="dark" data-radius="soft">
+          <div class="stage-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>{tr("Hexalis DS / Lienzo", "Hexalis DS / Canvas")}</span><span class="you"><i></i>{tr("Tú estás editando", "You are editing")}</span></div>
+          <p class="sr-only" id="pgHowTo">{tr("Pulsa Espacio para tomar la pieza, las flechas para moverla y Espacio otra vez para soltarla. Escape cancela.", "Press Space to pick up the piece, the arrow keys to move it and Space again to drop it. Escape cancels.")}</p>
+          <ul class="stage-grid" id="pgCanvas" aria-label={tr("Piezas del lienzo", "Canvas pieces")}>
+            <li class="s-tile t-buttons" data-name={tr("Botones", "Buttons")}><div class="s-tile-label"><span>{tr("Botones", "Buttons")}</span><span class="s-meta">{tr("4 variantes", "4 variants")}<button class="s-grip" type="button" aria-label={tr("Mover Botones", "Move Buttons")} aria-describedby="pgHowTo" aria-pressed="false"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></button></span></div>
+              <div class="s-row"><button class="s-btn primary" type="button">{tr("Guardar", "Save")}</button><button class="s-btn secondary" type="button">{tr("Borrador", "Draft")}</button><button class="s-btn ghost" type="button">{tr("Cancelar", "Cancel")}</button><button class="s-btn danger" type="button">{tr("Eliminar", "Delete")}</button></div>
+            </li>
+            <li class="s-tile t-badges" data-name={tr("Insignias", "Badges")}><div class="s-tile-label"><span>{tr("Insignias", "Badges")}</span><span class="s-meta">{tr("4 estados", "4 states")}<button class="s-grip" type="button" aria-label={tr("Mover Insignias", "Move Badges")} aria-describedby="pgHowTo" aria-pressed="false"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></button></span></div>
+              <div class="s-row"><span class="s-badge ok">{tr("Activo", "Active")}</span><span class="s-badge warn">{tr("Pendiente", "Pending")}</span><span class="s-badge err">Error</span><span class="s-badge info">{tr("Nuevo", "New")}</span></div>
+              <div class="s-row" style="justify-content: space-between"><span class="faces s-avatars" id="pgFaces"></span><span class="s-badge info" id="pgTeamCount">{tr("6 integrantes", "6 members")}</span></div>
+            </li>
+            <li class="s-tile" data-name={tr("Campo de texto", "Text field")}><div class="s-tile-label"><span>{tr("Campo de texto", "Text field")}</span><span class="s-meta">{tr("foco", "focus")}<button class="s-grip" type="button" aria-label={tr("Mover Campo de texto", "Move Text field")} aria-describedby="pgHowTo" aria-pressed="false"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></button></span></div>
+              <div class="s-field"><label for="pgEmail">{tr("Correo", "Email")}</label><input class="s-input" id="pgEmail" type="email" placeholder={tr("nombre@correo.com", "name@email.com")} autocomplete="off"><span class="s-help">{tr("Campo de ejemplo con su estado de foco.", "Sample field with its focus state.")}</span></div>
+            </li>
+            <li class="s-tile" data-name={tr("Selección", "Selection")}><div class="s-tile-label"><span>{tr("Selección", "Selection")}</span><span class="s-meta">{tr("2 controles", "2 controls")}<button class="s-grip" type="button" aria-label={tr("Mover Selección", "Move Selection")} aria-describedby="pgHowTo" aria-pressed="false"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></button></span></div>
+              <div role="checkbox" class="s-opt" tabindex="0" aria-checked="true"><span class="s-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span>{tr("Modo oscuro en docs", "Dark mode in docs")}</div>
+              <div role="switch" class="s-opt" tabindex="0" aria-checked="true"><span class="s-switch"></span>{tr("Visión segura rojo-verde", "Red-green safe vision")}</div>
+            </li>
+            <li class="s-tile" data-name={tr("Tarjeta", "Card")}><div class="s-tile-label"><span>{tr("Tarjeta", "Card")}</span><span class="s-meta">{tr("proyecto", "project")}<button class="s-grip" type="button" aria-label={tr("Mover Tarjeta", "Move Card")} aria-describedby="pgHowTo" aria-pressed="false"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></button></span></div>
+              <div class="s-card">
+                <div class="s-card-img" aria-hidden="true"><i></i><i></i><i></i></div>
+                <div class="s-card-body"><strong>{tr("Visor de eventos", "Events viewer")}</strong><span>Space Apps 2026</span></div>
+                <div class="s-row s-card-foot"><span class="s-badge warn">{tr("En desarrollo", "In development")}</span><button class="s-btn primary" type="button">{tr("Abrir", "Open")}</button></div>
+              </div>
+            </li>
+            <li class="s-tile" data-name={tr("Gráfico", "Chart")}><div class="s-tile-label"><span>{tr("Gráfico", "Chart")}</span><span class="s-meta">{tr("datos de ejemplo", "sample data")}<button class="s-grip" type="button" aria-label={tr("Mover Gráfico", "Move Chart")} aria-describedby="pgHowTo" aria-pressed="false"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></button></span></div>
+              <div class="s-chart" role="img" aria-label={tr("Gráfico de barras de ejemplo con siete valores", "Sample bar chart with seven values")}>
+                <i style="--v: .42"></i><i style="--v: .64"></i><i style="--v: .5"></i><i style="--v: .86"></i><i style="--v: .72"></i><i style="--v: .94"></i><i style="--v: .6"></i>
+              </div>
+              <div class="s-row" style="justify-content: space-between"><span class="s-help">{tr("Lun", "Mon")}</span><span class="s-help">{tr("Dom", "Sun")}</span></div>
+            </li>
+          </ul>
+          <div class="s-toast" id="pgToast" role="status"><span class="ok-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span><div><b>{tr("Componentes publicados", "Components published")}</b><span>Hexalis DS · v1.0.0</span></div></div>
+          <p class="sr-only" id="pgLive" aria-live="assertive"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. PROYECTOS -->
