@@ -11,7 +11,10 @@ const SIDE = matchMedia('(min-width: 961px)'); /* mismo corte que las etiquetas 
 let renderer;
 try { renderer = new THREE.WebGLRenderer({ canvas, antialias: !phone, alpha: true, powerPreference: 'high-performance' }); }
 catch (e) { host.classList.add('no-gl'); throw e; }
-renderer.setPixelRatio(Math.min(devicePixelRatio || 1, phone ? 1.25 : 1.5)); /* más de 1,5 cuesta mucho en pantallas grandes y apenas se nota */
+/* resolución adaptable: en el teléfono arranca nítida (hasta 2) y baja de a poco si el equipo no llega a ~40 fps al hacer scroll */
+const DPR_MIN = Math.min(devicePixelRatio || 1, phone ? 1.25 : 1);
+let dpr = Math.min(devicePixelRatio || 1, phone ? 2 : 1.5); /* en escritorio más de 1,5 cuesta mucho en pantallas grandes y apenas se nota */
+renderer.setPixelRatio(dpr);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = phone ? 1 : .82;
@@ -63,7 +66,7 @@ const roundHex = (R, t = R * .156) => {
   sh.closePath(); return sh;
 };
 const shape = roundHex(.9);
-const geo = new THREE.ExtrudeGeometry(shape, { depth: 1, bevelEnabled: true, bevelThickness: .07, bevelSize: .06, bevelSegments: phone ? 1 : 3, curveSegments: phone ? 2 : 4 });
+const geo = new THREE.ExtrudeGeometry(shape, { depth: 1, bevelEnabled: true, bevelThickness: .07, bevelSize: .06, bevelSegments: phone ? 2 : 3, curveSegments: phone ? 3 : 4 }); /* en el teléfono, esquinas suaves sin facetas visibles */
 const mat = phone
   ? new THREE.MeshStandardMaterial({ roughness: .45, metalness: .04 })
   : new THREE.MeshPhysicalMaterial({ roughness: .42, metalness: .1, clearcoat: .55, clearcoatRoughness: .3 });
@@ -768,6 +771,15 @@ if (matchMedia('(hover: hover) and (pointer: fine)').matches) addEventListener('
 
 /* Bucle: solo mientras el recorrido está en pantalla */
 let visible = true, raf = 0, last = performance.now(), fading = false, lastDraw = 0, wasMoving = true;
+const LAG = matchMedia('(pointer: coarse)').matches ? 80 : 160; /* con el dedo, la forma sigue más de cerca: menos sensación de retraso */
+/* si los cuadros con movimiento tardan más de ~26 ms, baja la resolución un paso (nunca la sube: evita oscilar) */
+const slow = [];
+function adapt(dt) {
+  if (dpr <= DPR_MIN) return;
+  slow.push(dt); if (slow.length < 40) return;
+  const avg = slow.reduce((a, x) => a + x, 0) / slow.length; slow.length = 0;
+  if (avg > 26) { dpr = Math.max(DPR_MIN, dpr - .25); renderer.setPixelRatio(dpr); starMat.uniforms.uPx.value = dpr; resize(); }
+}
 if (HX.still()) cur = Math.round(cur);
 function frame(now) {
   raf = 0; if (!visible) return;
@@ -775,13 +787,14 @@ function frame(now) {
   if (!wasMoving && Math.abs(HX.journey() - cur) < .0005 && now - lastDraw < 33) { raf = requestAnimationFrame(frame); return; }
   lastDraw = now;
   const dt = Math.min(120, now - last); last = now; /* en equipos lentos la forma no se queda atrás del scroll */
+  if (wasMoving) adapt(dt);
   const still = HX.still();
   const target = HX.journey();
   if (still) {
     const next = Math.round(target);
     if (next !== Math.round(cur) && !fading) { fading = true; canvas.style.opacity = '0'; setTimeout(() => { cur = next; render(); canvas.style.opacity = ''; fading = false; }, 220); }
   }
-  else cur += (target - cur) * (1 - Math.exp(-dt / 160)); /* el scroll arrastra la forma con algo de peso */
+  else cur += (target - cur) * (1 - Math.exp(-dt / LAG)); /* el scroll arrastra la forma con algo de peso */
   if (!still) {
     time += dt;
     if (cur < 4.5) { globeAngle = 0; spinV = 0; } /* el pliegue siempre cierra con el polo mirando a quien visita */
