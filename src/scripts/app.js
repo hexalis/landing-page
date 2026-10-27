@@ -575,8 +575,10 @@ function moveNavInk() {
   navInk.style.opacity = '1';
 }
 addEventListener('resize', moveNavInk);
-const scrolledOut = () => { if (scrollY < innerHeight * .5) { navLinks.forEach(a => a.setAttribute('aria-current', 'false')); navInk.style.opacity = '0'; } };
-addEventListener('scroll', () => requestAnimationFrame(scrolledOut), { passive: true });
+/* solo escribe si algo cambia: tocar atributos en cada cuadro de scroll recalcula estilos del menú */
+let outTick = false;
+const scrolledOut = () => { outTick = false; if (scrollY < innerHeight * .5 && navInk.style.opacity !== '0') { navLinks.forEach(a => a.setAttribute('aria-current', 'false')); navInk.style.opacity = '0'; } };
+addEventListener('scroll', () => { if (!outTick) { outTick = true; requestAnimationFrame(scrolledOut); } }, { passive: true });
 
 const navLinks = [...$$('.links a')];
 const secObs = new IntersectionObserver(entries => entries.forEach(en => {
