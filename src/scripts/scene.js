@@ -11,7 +11,7 @@ const SIDE = matchMedia('(min-width: 961px)'); /* mismo corte que las etiquetas 
 let renderer;
 try { renderer = new THREE.WebGLRenderer({ canvas, antialias: !phone, alpha: true, powerPreference: 'high-performance' }); }
 catch (e) { host.classList.add('no-gl'); throw e; }
-renderer.setPixelRatio(Math.min(devicePixelRatio || 1, phone ? 1.25 : 2));
+renderer.setPixelRatio(Math.min(devicePixelRatio || 1, phone ? 1.25 : 1.5)); /* más de 1,5 cuesta mucho en pantallas grandes y apenas se nota */
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = phone ? 1 : .82;
@@ -23,7 +23,14 @@ const camDir = new THREE.Vector3(0, -.62, 1).normalize();
 scene.fog = new THREE.Fog(0x06080f, 40, 92);
 /* Reflejos de estudio: dan el brillo de material pulido sin texturas externas */
 /* se genera después del primer cuadro, en un momento ocioso, para no bloquear la carga */
-const makeEnv = () => { const pmrem = new THREE.PMREMGenerator(renderer); scene.environment = pmrem.fromScene(new RoomEnvironment(renderer), .04).texture; pmrem.dispose(); render(true); };
+const makeEnv = () => { const pmrem = new THREE.PMREMGenerator(renderer); scene.environment = pmrem.fromScene(new RoomEnvironment(renderer), .04).texture; pmrem.dispose(); warm().then(() => render(true)); }; /* los reflejos cambian los shaders: se vuelven a preparar todos */
+/* compileAsync solo prepara lo visible: las piezas de capítulos posteriores se muestran un instante (sin dibujar) para no compilarlas en pleno scroll */
+const warm = () => {
+  const hidden = []; scene.traverse(o => { if (!o.visible) { hidden.push(o); o.visible = true; } });
+  const ready = renderer.compileAsync ? renderer.compileAsync(scene, camera) : Promise.resolve();
+  hidden.forEach(o => { o.visible = false; });
+  return ready.catch(() => {});
+};
 
 /* Luz: clave fría desde arriba a la izquierda, contraluz azul y una luz que sigue al puntero */
 const hemi = new THREE.HemisphereLight(0xdfe7ff, 0x141a2c, .7); scene.add(hemi);
@@ -629,7 +636,8 @@ function render(force) {
     m4.compose(pos, qs, scl); mesh.setMatrixAt(i, m4);
     nrm.set(0, 0, 1).applyQuaternion(qs); plateP.copy(pos).addScaledVector(nrm, 1.07 * scl.z + .04); plateS.set(scl.x, scl.y, 1);
     plateM.compose(plateP, qs, plateS); plates.setMatrixAt(i, plateM); /* la placa flota a distancia fija: sin parpadeo en celdas bajas */
-    colTmp.setRGB(C[a][i * 3] + (C[b][i * 3] - C[a][i * 3]) * e, C[a][i * 3 + 1] + (C[b][i * 3 + 1] - C[a][i * 3 + 1]) * e, C[a][i * 3 + 2] + (C[b][i * 3 + 2] - C[a][i * 3 + 2]) * e);
+    const ce = Math.min(1, Math.max(0, (e - .35) / .3)); /* el color cambia rápido a mitad del vuelo: sin tonos grises intermedios */
+    colTmp.setRGB(C[a][i * 3] + (C[b][i * 3] - C[a][i * 3]) * ce, C[a][i * 3 + 1] + (C[b][i * 3 + 1] - C[a][i * 3 + 1]) * ce, C[a][i * 3 + 2] + (C[b][i * 3 + 2] - C[a][i * 3 + 2]) * ce);
     if (act > 0) colTmp.lerp(phaseHi, act);
     mesh.setColorAt(i, colTmp);
     colTmp.lerp(plateTint, .14); if (w4 > 0 && i > 6) colTmp.multiplyScalar(1 - .38 * w4); /* el suelo del ciclo se apaga: mandan las fases */
@@ -643,7 +651,7 @@ function render(force) {
     { const pk = PROJ.indexOf(i); if (pk === 2) { youQ.copy(qs); youTop.copy(pos).addScaledVector(tmpV.set(0, 0, 1).applyQuaternion(qs), .35); } else if (pk >= 0) { beamN[pk].set(0, 0, 1).applyQuaternion(qs); beamTop[pk].copy(pos).addScaledVector(beamN[pk], 1.07 * scl.z); } }
     const dls = decalOf.get(i);
     if (dls) for (const d of dls) {
-      const dw = Math.min(1, Math.max(0, (1 - Math.abs(p - d.state) * 2.2) * 1.6)); /* opaca en casi todo el capítulo */
+      const dw = Math.min(1, Math.max(0, (1 - Math.abs(p - d.state) * 2.2) * 2.4 - .5)); /* opaca en casi todo el capítulo y fuera antes de que la celda vuele */
       d.mesh.visible = dw > .01 && scl.x > .05;
       if (d.mesh.visible) { plateP.addScaledVector(nrm, .025); d.mesh.matrix.compose(plateP, qs, plateS); d.mesh.matrixWorldNeedsUpdate = true; d.mesh.material.opacity = dw; plateP.addScaledVector(nrm, -.025); }
     }
@@ -717,14 +725,15 @@ function render(force) {
   const w = host.clientWidth, h = host.clientHeight;
   world.updateMatrixWorld();
   { /* «Tú»: visible del origen al sistema; en el ciclo y el planeta habla la celda «Tu proyecto» */
-    const lw = (wideHero() || p > .5 ? 1 : 0) * (1 - Math.min(1, Math.max(0, (p - 3.45) * 2.5)));
+    const settle = HX.still() ? 1 : Math.min(1, Math.max(0, (1 - Math.abs(p - Math.round(p)) * 2.6) * 2 - .3)); /* entre capítulos se apaga: no flota suelta mientras las celdas viajan */
+    const lw = (wideHero() || p > .5 ? 1 : 0) * (1 - Math.min(1, Math.max(0, (p - 3.45) * 2.5))) * settle;
     const si = Math.round(p), sub = si >= 0 && si < 6 ? YOU_SUB[si] : null;
     if (si !== youSub) { youSub = si; youLab.innerHTML = `<b>${tr('Tú', 'You')}${sub ? `<small>${sub}</small>` : ''}</b>`; }
     youLab.style.opacity = lw.toFixed(3);
     if (lw > .001) { tmpV.copy(youPos).applyMatrix4(world.matrixWorld).project(camera); youLab.style.transform = `translate3d(${((tmpV.x * .5 + .5) * w).toFixed(1)}px, ${((-tmpV.y * .5 + .5) * h).toFixed(1)}px, 0)`; }
   }
   for (const l of labs) {
-    let wgt = Math.max(0, 1 - Math.abs(p - l.state) * 2.6);
+    let wgt = Math.min(1, Math.max(0, (1 - Math.abs(p - l.state) * 2.6) * 2 - .3)); /* casi siempre del todo visible o apagada: sin etiquetas a medias sobre las celdas */
     if (l.globe && wgt > 0) { nrm.fromArray(GLOBE_V, l.cell * 3).applyQuaternion(gRot); wgt *= Math.min(1, Math.max(0, (nrm.dot(camDir) - .58) * 6)); }
     if (wgt <= .001) { if (l.el.style.opacity !== '0') l.el.style.opacity = '0'; continue; }
     tmpV.fromArray(tops, l.cell * 3).applyMatrix4(world.matrixWorld).project(camera);
@@ -801,7 +810,7 @@ for (let i = 0; i < N; i++) { mesh.setColorAt(i, col.set(0x000000)); plates.setC
 buildColors();
 if (document.fonts) Promise.all([document.fonts.load('500 40px "JetBrains Mono"'), document.fonts.load('600 40px Inter')]).then(buildColors, () => {});
 resize();
-(renderer.compileAsync ? renderer.compileAsync(scene, camera) : Promise.resolve()).catch(() => {}).then(() => {
+warm().then(() => {
   render(true);
   requestAnimationFrame(() => { host.classList.remove('no-gl'); host.classList.add('gl-ready'); kick(); });
   (window.requestIdleCallback || (f => setTimeout(f, 400)))(makeEnv, { timeout: 2000 });

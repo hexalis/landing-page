@@ -403,14 +403,14 @@ $$('.rise').forEach(el => [...el.children].forEach((c, i) => c.style.setProperty
 const io = new IntersectionObserver(entries => entries.forEach(en => {
   if (!en.isIntersecting) return;
   const el = en.target; io.unobserve(el);
-  if (el.classList.contains('rise')) { el.classList.add('in'); if (el.classList.contains('cover')) setTimeout(() => el.classList.add('revealed'), 1700); }
+  if (el.classList.contains('rise')) { el.classList.add('in'); if (el.classList.contains('cover')) setTimeout(() => el.classList.add('revealed'), 900); }
   if (el.dataset.count && !still()) {
     const end = +el.dataset.count, t0 = performance.now();
     const dur = +el.dataset.dur || 1400;
     const step = t => { const k = clamp01((t - t0) / dur), e = 1 - Math.pow(1 - k, 4); el.textContent = fmt(Math.round(end * e)); if (k < 1) requestAnimationFrame(step); else el.textContent = fmt(end); };
     requestAnimationFrame(step);
   }
-}), { threshold: 0, rootMargin: '0px 0px -10% 0px' });
+}), { threshold: 0, rootMargin: '0px 0px -4% 0px' }); /* entra apenas asoma: el texto ya está legible al llegar al centro */
 $$('.rise, [data-count]').forEach(el => io.observe(el));
 if (reduceMotion) $$('.rise').forEach(el => el.classList.add('in'));
 
@@ -519,18 +519,21 @@ function onScrollFrame() {
     rail.classList.toggle('on', inJ);
     document.body.classList.toggle('in-journey', inJ); /* dentro del recorrido «Tú» es la celda libre, no el puntero */
     if (inJ) { const k = Math.round(journeyP); if (k !== railK) { railK = k; railLinks.forEach((a, i) => a.toggleAttribute('aria-current', i === k)); } }
+    /* la escena 3D se aleja y se apaga mientras el recorrido termina; con movimiento reducido solo se apaga, pero nunca queda sobre Obras */
+    const exit = clamp01((innerHeight - jr.bottom) / (innerHeight * .35));
+    if (Math.abs(exit - lastExit) > .002) {
+      lastExit = exit; stage3dEl.style.opacity = (1 - exit).toFixed(3);
+      stage3dEl.style.visibility = exit >= 1 ? 'hidden' : '';
+      stage3dEl.style.transform = exit && !still() ? `scale(${(1 - exit * .08).toFixed(4)})` : '';
+    }
   }
   if (!reduceMotion) {
     const calm = still();
     /* lecturas */
     const vh = innerHeight, q = quote ? quote.getBoundingClientRect() : { top: vh_off, bottom: vh_off, height: 0 }, lr = logBox.getBoundingClientRect(), wr = wordmark.getBoundingClientRect();
     const logTops = lr.top < vh && lr.bottom > 0 ? logRows.map(r => r.getBoundingClientRect().top) : null;
-    const jb = journeyEl.getBoundingClientRect().bottom;
     const panelRects = deepScroll ? panels.map(pn => pn.getBoundingClientRect()) : null;
     /* escrituras */
-    /* la escena 3D se aleja y se apaga mientras el recorrido termina */
-    const exit = clamp01((vh - jb) / (vh * .35));
-    if (Math.abs(exit - lastExit) > .002) { lastExit = exit; stage3dEl.style.opacity = (1 - exit).toFixed(3); stage3dEl.style.transform = exit && !calm ? `scale(${(1 - exit * .08).toFixed(4)})` : ''; }
     /* los paneles avanzan un poco más despacio que el scroll: profundidad frente a la escena */
     /* profundidad: los paneles avanzan un poco más despacio que el scroll (sin opacidad: el vidrio dejaría ver el 3D nítido detrás del texto) */
     if (panelRects) panelRects.forEach((r, i) => {
@@ -728,7 +731,7 @@ if (DEV_DATA !== null) {
   if (still()) { turn.innerHTML = YOUR_TURN; return; }
   const m = TEAM[0];
   const g = document.createElement('span'); g.className = 'cur guide'; g.setAttribute('aria-hidden', 'true');
-  g.style.cssText = `--c:${m.color};--ink:${m.ink}`; g.innerHTML = `<svg><use href="#arrow"/></svg><b>${m.cursor}</b>`;
+  g.style.cssText = `--c:${m.color};--ink:${m.ink}`; g.innerHTML = `<svg><use href="#arrow"/></svg><b>${m.cursor} · demo</b>`; /* es una demostración, no alguien conectado */
   box.appendChild(g);
   let gx = 0, gy = 0, stop = false, running = false;
   const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -736,7 +739,9 @@ if (DEV_DATA !== null) {
   async function moveTo(el, dur = 760) {
     if (stop) throw 0;
     const b = box.getBoundingClientRect(), r = el.getBoundingClientRect();
-    const x = r.left - b.left + r.width * .55, y = r.top - b.top + r.height * .55;
+    /* la punta toca la esquina inferior derecha: la etiqueta queda fuera del control y no lo tapa */
+    const x = r.right - b.left - Math.min(10, r.width * .2), y = r.bottom - b.top - Math.min(8, r.height * .2);
+    g.classList.toggle('flip', x > b.width - 150); /* junto al borde derecho la etiqueta se voltea: no desborda la página */
     const a = g.animate([{ transform: `translate3d(${gx}px, ${gy}px, 0)` }, { transform: `translate3d(${x}px, ${y}px, 0)` }], { duration: dur, easing: 'cubic-bezier(.77, 0, .175, 1)' });
     gx = x; gy = y; place(); await a.finished; if (stop) throw 0;
   }
@@ -773,6 +778,9 @@ if (DEV_DATA !== null) {
   const takeOver = () => { if (running && window.__pgDemo) { stop = true; g.getAnimations().forEach(a => a.cancel()); } else stop = true; };
   box.addEventListener('pointerdown', e => { if (e.isTrusted) takeOver(); }, true);
   box.addEventListener('keydown', e => { if (e.isTrusted) takeOver(); }, true);
+  /* con el puntero encima o al primer toque, el guía se aparta: nunca compite con quien visita */
+  if (finePointer) box.addEventListener('pointerenter', e => { if (e.isTrusted && running) takeOver(); });
+  box.addEventListener('touchstart', e => { if (e.isTrusted) takeOver(); }, { passive: true, capture: true });
   new IntersectionObserver(([e], o) => { if (e.isIntersecting && !stop && !still()) { o.disconnect(); setTimeout(() => { if (!stop) run(); }, 500); } }, { rootMargin: "-25% 0px -25% 0px" }).observe(box);
 })();
 

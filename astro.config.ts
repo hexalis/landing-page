@@ -16,11 +16,13 @@ export default defineConfig({
         "default-src 'self'",
         "img-src 'self' data: https://avatars.githubusercontent.com",
         "font-src 'self'",
-        "connect-src 'self' https://api.github.com",
+        // cloudflareinsights.com: Cloudflare Web Analytics, which the host injects into every page
+        "connect-src 'self' https://api.github.com https://cloudflareinsights.com",
         "object-src 'none'",
         "base-uri 'self'",
         "form-action 'self'",
       ],
+      scriptDirective: { resources: ["'self'", 'https://static.cloudflareinsights.com'] },
       // Sections set per-element custom properties (style="--c: …"); attribute styles cannot run code.
       styleDirective: { resources: ["'self'", { resource: "'unsafe-inline'", kind: 'attribute' }] },
     },
