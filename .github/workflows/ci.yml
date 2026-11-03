@@ -1,17 +1,19 @@
 name: Validate
+
 on: [push, pull_request]
+
 permissions:
   contents: read
+  pull-requests: write
+
 jobs:
-  verify:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: npm
-      - run: npm ci
-      - run: npm run verify
-      - run: npx playwright install --with-deps chromium
-      - run: npm run test:e2e
+  ci:
+    uses: hexalis/github-workflows/.github/workflows/node-ci.yml@main
+    with:
+      package-manager: npm
+      node-version: "24"
+      install-command: npm ci
+      test-command: npm run verify
+      build-command: npm run build
+      e2e-install-command: npx playwright install --with-deps chromium
+      e2e-command: npm run test:e2e

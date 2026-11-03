@@ -1,5 +1,3 @@
-# Publica el build estático de Astro (`dist/`) en GitHub Pages (hexalis.org).
-# Requiere Settings → Pages → Source: GitHub Actions. El dominio propio sirve en la raíz.
 name: Pages
 
 on:
@@ -17,30 +15,12 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-      - run: npm ci
-      - run: npm run build
-        env:
-          SITE_URL: https://hexalis.org
-      - uses: actions/configure-pages@v6
-      - uses: actions/upload-pages-artifact@v5
-        with:
-          path: ./dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v5
+  pages:
+    uses: hexalis/github-workflows/.github/workflows/pages-static.yml@main
+    with:
+      package-manager: npm
+      node-version: "24"
+      install-command: npm ci
+      build-command: npm run build
+      output-path: dist
+      site-url: https://hexalis.org
