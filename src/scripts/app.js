@@ -10,9 +10,11 @@ const LINKS = {
   github:    'https://github.com/hexalis',
   dsFigma:   'https://www.figma.com/design/8Fg5IHgcKSlgQefIhm2MxQ',
   opsFigma:  'https://www.figma.com/design/bebQIgCgYTS57nV4rSV6UP',
-  dsRepo:    '',
+  btFigma:   'https://www.figma.com/design/ecEfN0sdN1inIc7Iexn4YC',
+  dsRepo:    'https://github.com/hexalis/design-system',
+  dsStorybook: 'https://hexalis.github.io/design-system/',
   opsRepo:   '',
-  spaceApps: '',
+  spaceApps: 'https://milanko.hexalis.org/app/',
   contact:   ''
 };
 /* Datos en vivo. Todo es opcional: si un servicio no responde, la página usa su contenido estático. */
@@ -21,15 +23,37 @@ const LIVE = {
   github: { org: 'hexalis', repos: [] } // repos públicos para el muro de contribuidores, p. ej. ['design-system']
 };
 /* Cada integrante es un cursor y una celda del panal (paleta dataviz del Design System).
-   Cambia "cursor" por el nombre real cuando lo tengan. */
+   La ficha habla de la persona, no de los proyectos. Todo lo que quede vacío ('' o []) no se muestra.
+   - role: disciplina · bio: una frase en primera persona, escrita por la persona
+   - skills: 3 a 5 habilidades · talk: temas de los que se le puede escribir · city: ciudad
+   Fuentes actuales: propuesta de Milanko (rol y LinkedIn), perfiles públicos de GitHub (bio, ciudad) y los créditos de las librerías. */
 const TEAM = [
-  /* links: github (usuario, también da la foto), linkedin y portfolio (URL completas). Lo que quede vacío no se muestra */
-  { name: 'Jorge Alberto Ramos Telles', cursor: 'Jorge', role: 'Product Designer · Design System y Design Ops Toolkit', initials: 'JR', color: '#3987E5', ink: '#0D121D', links: { github: '', linkedin: '', portfolio: '' } },
-  { name: 'Integrante 2', cursor: 'Frontend', role: 'Rol por confirmar', initials: 'FE', color: '#9085E9', ink: '#0D121D', tbd: true },
-  { name: 'Integrante 3', cursor: 'Datos', role: 'Rol por confirmar', initials: 'DA', color: '#1BAF7A', ink: '#0D121D', tbd: true },
-  { name: 'Integrante 4', cursor: 'Docs', role: 'Rol por confirmar', initials: 'DO', color: '#EDA100', ink: '#0D121D', tbd: true },
-  { name: 'Integrante 5', cursor: 'Comunidad', role: 'Rol por confirmar', initials: 'CO', color: '#E87BA4', ink: '#0D121D', tbd: true },
-  { name: 'Integrante 6', cursor: 'Investigación', role: 'Rol por confirmar', initials: 'RE', color: '#EB6834', ink: '#0D121D', tbd: true }
+  /* links: github (usuario, también da la foto), linkedin y portfolio (URL completas) */
+  { name: 'Jorge Alberto Ramos Tellez', cursor: 'Jorge', role: tr('Diseño de producto e ingeniería de diseño · líder del equipo', 'Product design and design engineering · team lead'),
+    bio: tr('Diseño productos de principio a fin y uso IA y código para hacerlos realidad.', 'I design products end to end and use AI and code to make them real.'), city: '',
+    skills: [tr('Diseño de producto y UI/UX', 'Product design and UI/UX'), tr('Sistemas de diseño y DesignOps', 'Design systems and DesignOps'), tr('Investigación UX', 'UX research'), tr('IA e ingeniería de diseño', 'AI and design engineering'), 'Figma'],
+    talk: [tr('sistemas de diseño agénticos', 'agentic design systems'), tr('diseño a código', 'design-to-code'), tr('interacción humano-computadora', 'human-computer interaction')],
+    initials: 'JR', color: '#3987E5', ink: '#0D121D', links: { github: 'JorgeRamos-UX', linkedin: 'https://www.linkedin.com/in/jorge-ramos-tellez/', portfolio: 'https://github.com/JorgeRamos-UX/Portafolio-UX' } },
+  { name: 'Roger Fernando Guido Cisneros', cursor: 'Roger', role: tr('Desarrollo de software', 'Software development'),
+    bio: '', city: '',
+    skills: [tr('Ingeniería electrónica', 'Electronic engineering'), tr('Desarrollo web', 'Web development'), 'Astro'], talk: [],
+    initials: 'RG', color: '#9085E9', ink: '#0D121D', links: { github: 'RogerG03', linkedin: 'https://www.linkedin.com/in/roger-0113-guido/', portfolio: '' } },
+  { name: 'Anthony Alexander Aguilar Parrales', cursor: 'Anthony', role: tr('Investigación de producto', 'Product research'),
+    bio: '', city: '',
+    skills: [], talk: [],
+    initials: 'AA', color: '#1BAF7A', ink: '#0D121D', links: { github: '', linkedin: 'https://www.linkedin.com/in/anthony-alexander-aguilar-parrales-755447267/', portfolio: '' } },
+  { name: 'Carlos Andrés Perez Ubeda', cursor: 'Carlos', role: tr('Ingeniería de software', 'Software engineering'),
+    bio: '', city: 'Jalapa, Nueva Segovia',
+    skills: [tr('Desarrollo web', 'Web development'), 'Frontend', 'TypeScript'], talk: [],
+    initials: 'CU', color: '#EDA100', ink: '#0D121D', links: { github: 'cswni', linkedin: 'https://www.linkedin.com/in/cswni/', portfolio: '' } },
+  { name: 'Marlon José Baltodano Delgadillo', cursor: 'Marlon', role: tr('Ingeniería de software', 'Software engineering'),
+    bio: tr('Construyo sistemas robustos y escalables, y me muevo por todo el stack.', 'I build robust, scalable systems and work across the whole stack.'), city: '',
+    skills: ['Backend', tr('Bases de datos', 'Databases'), tr('Integraciones', 'Integrations'), 'Frontend'], talk: [],
+    initials: 'MB', color: '#E87BA4', ink: '#0D121D', links: { github: 'marlonbaltodano11', linkedin: 'https://www.linkedin.com/in/marlon-baltodano/', portfolio: '' } },
+  { name: 'Francelia Michell López Alonzo', cursor: 'Michelle', role: tr('Desarrollo de software', 'Software development'),
+    bio: '', city: '',
+    skills: ['HTML', 'CSS', 'C#', 'Git'], talk: [],
+    initials: 'FL', color: '#EB6834', ink: '#0D121D', links: { github: 'FranceMLopez', linkedin: 'https://www.linkedin.com/in/francelia-l%C3%B3pez-97b706339/', portfolio: '' } }
 ];
 const PALETTES = {
   espectral: ['Espectral', '#7A9FEB', '#4064C6', '#2E4383', '#4064C6', '#6B5BD6'],
@@ -37,7 +61,9 @@ const PALETTES = {
   aurora:    ['Aurora',    '#2BB8A3', '#0C7A6C', '#073F3B', '#0F8A7A', '#5B6FD6'],
   ciruela:   ['Ciruela',   '#B07CF2', '#8A3FD1', '#331A68', '#7A3FD0', '#D4547E'],
   magma:     ['Magma',     '#FF7A52', '#C2401F', '#3A1310', '#B8361D', '#F08C2E'],
-  campo:     ['Campo',     '#8FB0FF', '#1B47B8', '#0D1A3D', '#1B47B8', '#1B47B8']
+  campo:     ['Campo',     '#8FB0FF', '#1B47B8', '#0D1A3D', '#1B47B8', '#1B47B8'],
+  opalo:     ['Ópalo',     '#B5AEF1', '#5146CB', '#2F2B6D', '#5146CB', '#9389E8'],
+  arcilla:   ['Arcilla',   '#9FE0BF', '#1F8455', '#23305A', '#1F8455', '#9FE0BF']
 };
 
 
@@ -47,7 +73,7 @@ const PALETTES = {
    ========================================================= */
 const DEV_DATA = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) ? new URLSearchParams(location.search).get('data') : null;
 if (DEV_DATA === 'worst') TEAM.splice(0, TEAM.length,
-  { name: 'Aleksandra Wiśniewska-Kowalczyk', cursor: 'Aleksandra W.', role: 'Ingeniera de accesibilidad y sistemas de diseño multiplataforma · Design System, Design Ops Toolkit y Space Apps', initials: 'AW', color: '#3987E5', ink: '#0D121D' },
+  { name: 'Aleksandra Wiśniewska-Kowalczyk', cursor: 'Aleksandra W.', role: 'Ingeniera de accesibilidad y sistemas de diseño multiplataforma · Design System, Design Ops Toolkit y Space Apps', city: 'San Juan de Limay, Estelí', bio: 'Diseño interfaces que funcionan con lector de pantalla, teclado, voz y cualquier combinación que se te ocurra, en cualquier tamaño de pantalla.', skills: ['Accesibilidad', 'Sistemas de diseño multiplataforma', 'Investigación con personas usuarias', 'Internacionalización (i18n)', 'Figma'], talk: ['WCAG 2.2', 'tokens de diseño', 'lectores de pantalla', 'documentación técnica bilingüe'], initials: 'AW', color: '#3987E5', ink: '#0D121D' },
   { name: 'Jo', cursor: 'Jo', role: '', initials: 'J', color: '#9085E9', ink: '#0D121D' },
   { name: 'José Ángel Hernández Montgomery III', cursor: 'Investigación de usuarios', role: 'Research', initials: 'JH', color: '#1BAF7A', ink: '#0D121D' },
   { name: 'Nguyễn Thị Thu Hương', cursor: 'Hương', role: 'Documentación técnica', initials: 'NH', color: '#EDA100', ink: '#0D121D' },
@@ -112,8 +138,14 @@ const RING = [[-.5, -1], [.5, -1], [1, 0], [.5, 1], [-.5, 1], [-1, 0]];
 const SLOT_HEX = `<svg viewBox="0 0 104 129"><path class="slot-line" d="${hexD(52, 60, 56)}"/></svg>`;
 const HIVE = TEAM.slice(0, 6).map(m => m.tbd
   ? { tag: m.cursor, name: tr('Perfil en camino', 'Profile on its way'), role: tr('Su nombre y su trabajo se publican cuando estén listos.', 'Their name and work will be published when ready.'), m }
-  : { tag: m.cursor, name: m.name, role: m.role, m });
-HIVE.push({ tag: tr('Tú', 'You'), name: tr('Tu lugar', 'Your place'), role: tr('La séptima celda', 'The seventh cell'), note: tr('Usa lo que ya hicimos, mejóralo o propón un proyecto nuevo.', 'Use what we made, improve it or propose a new project.'), slot: true });
+  : { tag: m.cursor, name: m.name, role: [m.role, m.city].filter(Boolean).join(' · '), m });
+/* la celda libre es la protagonista: le habla a quien visita y le da tres formas concretas de entrar */
+HIVE.push({ tag: tr('Tú', 'You'), name: tr('Esta celda es tuya', 'This cell is yours'), role: tr('Al panal le falta una persona para estar completo.', 'The hive is one person short of complete.'), note: tr('Hay tres formas de empezar:', 'There are three ways to start:'), slot: true,
+  ways: [
+    ['ds', tr('Diseña', 'Design'), tr('Usa las librerías en Figma y propón componentes o mejoras.', 'Use the libraries in Figma and propose components or improvements.')],
+    ['ops', tr('Programa', 'Code'), tr('Aporta variables, componentes y proyectos en GitHub.', 'Contribute variables, components and projects on GitHub.')],
+    ['org', tr('Trae una idea', 'Bring an idea'), tr('Cuéntanos qué problema quieres resolver y lo construimos juntos.', 'Tell us the problem you want to solve and we will build it together.')]
+  ] });
 $('#team').innerHTML = RING.map(([x, y], i) => {
   const it = HIVE[i];
   if (!it || it.slot) return `<span class="member empty" style="--x:${x};--y:${y}" aria-hidden="true"><span class="avatar">${SLOT_HEX}</span></span>`;
@@ -125,17 +157,19 @@ $('#team').innerHTML = RING.map(([x, y], i) => {
     <span class="avatar" aria-hidden="true">${SLOT_HEX}<b>+</b></span>
     <span class="cur" aria-hidden="true"><svg><use href="#arrow"/></svg><b>${tr('Tú', 'You')}</b></span></button>`;
 const teamCard = $('#teamCard'), hiveBtns = [...$$('#team button.member')];
-let hiveShown = -1, hivePinned = 0;
+/* la ficha abre en la celda libre: lo primero que se lee es la invitación */
+let hiveShown = -1, hivePinned = HIVE.length - 1;
 function showMember(i, animate) {
   if (i === hiveShown || !HIVE[i]) return;
   hiveShown = i;
   const it = HIVE[i], c = it.slot ? 'var(--accent)' : it.m.color, ink = it.slot ? 'var(--on-accent)' : it.m.ink;
   hiveBtns.forEach(b => { const on = +b.dataset.i === i; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); });
-  const L = (!it.slot && it.m.links) || {}, gh = (L.github || '').replace(/^@/, '');
+  const P = (!it.slot && it.m) || {};
+  const L = P.links || {}, gh = (L.github || '').replace(/^@/, '');
   const links = [gh && ['https://github.com/' + encodeURIComponent(gh), 'GitHub'], L.linkedin && [L.linkedin, 'LinkedIn'], L.portfolio && [L.portfolio, tr('Portafolio', 'Portfolio')]].filter(Boolean)
     .map(([u, t], k) => `<a class="btn ${k === 0 ? 'btn-primary' : 'btn-ghost'}" href="${esc(u)}" target="_blank" rel="noopener">${t}</a>`).join('');
   const face = it.slot ? '' : `<span class="hc-face" style="--c:${c};--ink:${ink}" aria-hidden="true">${gh ? `<img src="https://avatars.githubusercontent.com/${encodeURIComponent(gh)}?s=160" alt="" loading="lazy" width="64" height="64">` : esc(initialsOf(it.m))}</span>`;
-  teamCard.innerHTML = `<div class="hc-head">${face}<div><span class="hc-tag" style="--c:${c};--ink:${ink}">${esc(it.tag)}</span><h3>${esc(it.name)}</h3></div></div>${it.role ? `<p class="hc-role">${esc(it.role)}</p>` : ''}${it.note ? `<p class="hc-note">${esc(it.note)}</p>` : ''}${links ? `<div class="hc-links">${links}</div>` : ''}${it.slot ? `<a class="btn btn-primary" href="#sumate">${tr('Súmate', 'Join')}</a>` : ''}`;
+  teamCard.innerHTML = `<div class="hc-head">${face}<div><span class="hc-tag" style="--c:${c};--ink:${ink}">${esc(it.tag)}</span><h3>${esc(it.name)}</h3></div></div>${it.role ? `<p class="hc-role">${esc(it.role)}</p>` : ''}${it.note ? `<p class="hc-note">${esc(it.note)}</p>` : ''}${P.bio ? `<p class="hc-bio">${esc(P.bio)}</p>` : ''}${P.skills && P.skills.length ? `<ul class="hc-skills" style="--c:${c}" aria-label="${tr('Habilidades', 'Skills')}">${P.skills.map(k => `<li>${esc(k)}</li>`).join('')}</ul>` : ''}${P.talk && P.talk.length ? `<p class="hc-talk"><strong>${tr('Háblame de:', 'Talk to me about:')}</strong> ${esc(P.talk.join(', '))}</p>` : ''}${links ? `<div class="hc-links">${links}</div>` : ''}${it.ways ? `<ul class="hc-ways">${it.ways.map(([k, t, d]) => `<li class="${k}"><strong>${esc(t)}</strong> <span>${esc(d)}</span></li>`).join('')}</ul>` : ''}${it.slot ? `<a class="btn btn-primary" href="#sumate">${tr('Elegir cómo participar', 'Choose how to take part')} <span class="arr" aria-hidden="true">→</span></a>` : ''}`;
   $('#team').classList.toggle('has-on', true);
   /* cambio de ficha: un relevo corto, no una entrada */
   if (animate) teamCard.animate([{ opacity: .4, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: 200, easing: 'cubic-bezier(.23, 1, .32, 1)' });
@@ -153,7 +187,7 @@ $('#team').addEventListener('keydown', e => {
   const at = hiveBtns.indexOf(document.activeElement); if (at < 0) return;
   e.preventDefault(); hiveBtns[(at + k + hiveBtns.length) % hiveBtns.length].focus();
 });
-showMember(0, false);
+showMember(hivePinned, false);
 
 /* en Mac el atajo es ⌘ K */
 if (/Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent)) $$('kbd').forEach(k => { k.textContent = k.textContent.replace('Ctrl', '⌘'); });
@@ -184,7 +218,7 @@ motionBtn.addEventListener('click', () => { setMotion(!motionPaused); if (typeof
 if (reduceMotion) motionBtn.hidden = true;
 
 /* ---------- Paletas y playground ---------- */
-const pg = { palette: 'espectral', theme: 'dark', radius: 'soft' };
+const pg = { palette: 'espectral', theme: 'dark', style: 'neutral' };
 /* Pasos de la prueba: se completan con lo que hace quien visita (o el guía) */
 const stepsDone = new Set();
 function markStep(k) {
@@ -232,13 +266,123 @@ function segControl(id, key, attr) {
   });
 }
 segControl('#stageTheme', 'theme', 'data-stage');
-segControl('#stageRadius', 'radius', 'data-radius');
+segControl('#stageStyle', 'style', 'data-style');
 let toastTimer = 0;
 stage.addEventListener('click', e => {
   const opt = e.target.closest('.s-opt');
-  if (opt) opt.setAttribute('aria-checked', String(opt.getAttribute('aria-checked') !== 'true'));
+  if (!opt) return;
+  const on = opt.getAttribute('aria-checked') !== 'true';
+  opt.setAttribute('aria-checked', String(on));
+  /* visión segura rojo-verde del Design System (data-vision="cvd"): ok pasa a azul, error a naranja, info a pizarra */
+  if (opt.id === 'pgVision') { if (on) stage.dataset.vision = 'cvd'; else delete stage.dataset.vision; }
 });
 stage.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && e.target.classList.contains('s-opt')) { e.preventDefault(); e.target.click(); } });
+/* ---------- Acciones rápidas: cada pieza se cambia, se añade o se edita en el sitio ---------- */
+const EASE_OUT = 'cubic-bezier(.23, 1, .32, 1)';
+const enter = el => { if (!still()) el.animate([{ opacity: 0, transform: 'scale(.95)' }, { opacity: 1, transform: 'none' }], { duration: 180, easing: EASE_OUT }); };
+const leave = el => {
+  el.classList.add('gone');
+  if (still()) { el.remove(); return; }
+  el.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'scale(.95)' }], { duration: 150, easing: EASE_OUT }).finished.then(() => el.remove());
+};
+const swapText = (el, text) => { el.textContent = text; if (!still()) el.animate([{ opacity: .2, transform: 'translateY(3px)' }, { opacity: 1, transform: 'none' }], { duration: 180, easing: EASE_OUT }); };
+const chipVal = (btn, text) => swapText(btn.querySelector('b'), text);
+const cycle = (el, list) => { const i = (Number(el.dataset.i || 0) + 1) % list.length; el.dataset.i = i; return list[i]; };
+
+const BTN_STATES = [['default', tr('Normal', 'Default')], ['loading', tr('Cargando', 'Loading')], ['disabled', tr('Desactivado', 'Disabled')]];
+const FIELD_STATES = [
+  ['default', tr('Normal', 'Default'), tr('Campo de ejemplo con su estado de foco.', 'Sample field with its focus state.')],
+  ['error', 'Error', tr('Revisa el formato: falta la @.', 'Check the format: the @ is missing.')],
+  ['disabled', tr('Desactivado', 'Disabled'), tr('Este campo no se puede editar ahora.', 'This field cannot be edited right now.')]];
+const CARD_STATES = [['warn', tr('Prototipo', 'Prototype')], ['ok', tr('En vivo', 'Live')], ['info', tr('Archivado', 'Archived')]];
+const NEW_BADGES = [['info', tr('Revisión', 'Review')], ['ok', tr('Aprobado', 'Approved')], ['warn', tr('Beta', 'Beta')]];
+const NEW_OPTS = [tr('Notificaciones por correo', 'Email notifications'), tr('Movimiento reducido', 'Reduced motion')];
+const ADD_BADGE = tr('+ Insignia', '+ Badge'), ADD_OPT = tr('+ Opción', '+ Option'), RESET = tr('Reiniciar', 'Reset');
+$$('#pgChart i').forEach((b, i) => b.style.setProperty('--n', i));
+
+stage.addEventListener('click', e => {
+  const act = e.target.closest('.s-act'); if (!act) return;
+  const tile = act.closest('.s-tile');
+  switch (act.dataset.act) {
+    case 'state': {
+      const [k, label] = cycle(act, BTN_STATES); chipVal(act, label);
+      tile.dataset.state = k;
+      tile.querySelectorAll('.s-row .s-btn').forEach(b => { b.disabled = k === 'disabled'; });
+      tile.querySelector('.s-btn.primary').setAttribute('aria-busy', String(k === 'loading'));
+      break;
+    }
+    case 'field': {
+      const [k, label, help] = cycle(act, FIELD_STATES); chipVal(act, label);
+      const f = tile.querySelector('.s-field'), input = f.querySelector('.s-input');
+      f.dataset.state = k; input.disabled = k === 'disabled';
+      input.setAttribute('aria-invalid', String(k === 'error')); input.setAttribute('aria-describedby', 'pgEmailHelp');
+      if (k === 'error' && !input.value) input.value = tr('nombre.correo.com', 'name.email.com');
+      if (k === 'default' && /\.correo\.com$|\.email\.com$/.test(input.value)) input.value = '';
+      swapText($('#pgEmailHelp'), help);
+      break;
+    }
+    case 'badge': {
+      const row = tile.querySelector('.s-row'), added = row.querySelectorAll('button.s-badge:not(.gone)');
+      if (added.length >= NEW_BADGES.length) { added.forEach(leave); chipVal(act, ADD_BADGE); break; }
+      const [tone, text] = NEW_BADGES[added.length];
+      const b = document.createElement('button'); b.type = 'button'; b.className = `s-badge ${tone}`; b.textContent = text;
+      b.setAttribute('aria-label', tr(`Quitar insignia ${text}`, `Remove badge ${text}`));
+      row.appendChild(b); enter(b);
+      if (added.length + 1 >= NEW_BADGES.length) chipVal(act, RESET);
+      break;
+    }
+    case 'option': {
+      const added = tile.querySelectorAll('.s-opt.added:not(.gone)');
+      if (added.length >= NEW_OPTS.length) { added.forEach(leave); chipVal(act, ADD_OPT); break; }
+      const o = document.createElement('div'); o.className = 's-opt added'; o.setAttribute('role', 'checkbox'); o.tabIndex = 0; o.setAttribute('aria-checked', 'false');
+      o.innerHTML = '<span class="s-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span>';
+      o.append(NEW_OPTS[added.length]); tile.appendChild(o); enter(o);
+      if (added.length + 1 >= NEW_OPTS.length) chipVal(act, RESET);
+      break;
+    }
+    case 'status': {
+      const [tone, label] = cycle(act, CARD_STATES); chipVal(act, label);
+      const b = $('#pgCardStatus'); b.className = `s-badge ${tone}`; swapText(b, label);
+      break;
+    }
+    case 'data': {
+      const chart = $('#pgChart'); chart.classList.add('live');
+      chart.querySelectorAll('i').forEach(b => b.style.setProperty('--v', (.25 + Math.random() * .73).toFixed(2)));
+      break;
+    }
+  }
+});
+/* las insignias añadidas se quitan con un toque */
+stage.addEventListener('click', e => {
+  const b = e.target.closest('button.s-badge'); if (!b || b.classList.contains('gone')) return;
+  const tile = b.closest('.s-tile'); leave(b); chipVal(tile.querySelector('.s-act'), ADD_BADGE);
+});
+
+/* edición de textos en el sitio: doble clic o F2; Enter o salir guarda, Escape deshace */
+function editText(el) {
+  if (el.isContentEditable) return;
+  const before = el.textContent;
+  el.contentEditable = 'true'; el.spellcheck = false; el.focus();
+  const sel = getSelection(), r = document.createRange(); r.selectNodeContents(el); sel.removeAllRanges(); sel.addRange(r);
+  const done = keep => {
+    el.removeEventListener('keydown', onKey); el.removeEventListener('blur', onBlur);
+    el.contentEditable = 'false'; el.removeAttribute('contenteditable');
+    const t = el.textContent.replace(/\s+/g, ' ').trim();
+    el.textContent = keep && t ? t.slice(0, 40) : before;
+  };
+  const onKey = e => {
+    e.stopPropagation();
+    if (e.key === 'Enter') { e.preventDefault(); done(true); el.focus(); }
+    else if (e.key === 'Escape') { e.preventDefault(); done(false); el.focus(); }
+  };
+  const onBlur = () => done(true);
+  el.addEventListener('keydown', onKey); el.addEventListener('blur', onBlur);
+}
+stage.addEventListener('dblclick', e => { const el = e.target.closest('[data-edit]'); if (el) { e.preventDefault(); editText(el); } });
+stage.addEventListener('keydown', e => { if (e.key === 'F2' && e.target.matches('[data-edit]')) { e.preventDefault(); editText(e.target); } });
+/* un botón en edición no se pulsa: el Espacio escribe un espacio */
+stage.addEventListener('keyup', e => { if (e.target.isContentEditable) e.preventDefault(); }, true);
+stage.addEventListener('click', e => { if (e.target.closest('[contenteditable="true"]')) e.preventDefault(); }, true);
 $('#pgPublish').addEventListener('click', () => {
   const t = $('#pgToast'); t.classList.add('pop'); markStep('publish');
   clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('pop'), 2600);
@@ -266,6 +410,15 @@ function moveTile(t, to, skip) {
   return true;
 }
 let drag = null, kb = null, scrollRaf = 0;
+/* el hueco donde caerá la pieza: un contorno que la sigue de lugar en lugar */
+const dropSlot = document.createElement('div'); dropSlot.className = 's-drop'; dropSlot.setAttribute('aria-hidden', 'true'); stage.appendChild(dropSlot);
+function placeSlot(t, instant) {
+  dropSlot.classList.toggle('instant', !!instant);
+  dropSlot.style.width = t.offsetWidth + 'px'; dropSlot.style.height = t.offsetHeight + 'px';
+  dropSlot.style.transform = `translate(${t.offsetLeft}px, ${t.offsetTop}px)`;
+}
+/* posición de cada pieza según la rejilla, sin contar las animaciones en curso: así no hay intercambios dobles */
+const layoutRect = (o, par) => ({ left: par.left + o.offsetLeft, top: par.top + o.offsetTop, right: par.left + o.offsetLeft + o.offsetWidth, bottom: par.top + o.offsetTop + o.offsetHeight, width: o.offsetWidth, height: o.offsetHeight });
 function placeDrag() {
   const { t, gx, gy, x, y } = drag, par = t.offsetParent.getBoundingClientRect();
   t.style.transform = `translate(${x - gx - (par.left + t.offsetLeft)}px, ${y - gy - (par.top + t.offsetTop)}px) scale(1.02)`;
@@ -286,14 +439,18 @@ canvas.addEventListener('pointerdown', e => {
   drag = { t, id: e.pointerId, gx: e.clientX - (par.left + t.offsetLeft), gy: e.clientY - (par.top + t.offsetTop), x: e.clientX, y: e.clientY, from: tiles().indexOf(t) };
   grip.setPointerCapture(e.pointerId);
   t.classList.add('lifted'); document.body.classList.add('pg-dragging');
+  placeSlot(t, true); stage.classList.add('dragging');
   placeDrag(); autoScroll();
 });
 canvas.addEventListener('pointermove', e => {
   if (!drag || e.pointerId !== drag.id) return;
   drag.x = e.clientX; drag.y = e.clientY;
   /* cambia de lugar solo cuando el puntero entra en la zona central de otra pieza: sin parpadeos en los bordes */
-  const over = tiles().find(o => { if (o === drag.t) return false; const r = o.getBoundingClientRect(), mx = r.width * .2, my = r.height * .2; return e.clientX > r.left + mx && e.clientX < r.right - mx && e.clientY > r.top + my && e.clientY < r.bottom - my; });
-  if (over) moveTile(drag.t, tiles().indexOf(over), drag.t);
+  const par = drag.t.offsetParent.getBoundingClientRect();
+  const over = tiles().find(o => { if (o === drag.t) return false; const r = layoutRect(o, par), mx = r.width * .2, my = r.height * .2; return e.clientX > r.left + mx && e.clientX < r.right - mx && e.clientY > r.top + my && e.clientY < r.bottom - my; });
+  /* tras un cambio, la pieza desplazada no vuelve a cambiar hasta que el puntero sale de ella */
+  if (over && over !== drag.last) { drag.last = over; if (moveTile(drag.t, tiles().indexOf(over), drag.t)) placeSlot(drag.t); }
+  else if (!over) drag.last = null;
   placeDrag();
 });
 function drop(cancel) {
@@ -301,7 +458,7 @@ function drop(cancel) {
   const { t, from } = drag; drag = null; cancelAnimationFrame(scrollRaf);
   if (cancel) moveTile(t, from, t);
   const a = t.getBoundingClientRect();
-  t.style.transform = ''; t.classList.remove('lifted'); document.body.classList.remove('pg-dragging');
+  t.style.transform = ''; t.classList.remove('lifted'); document.body.classList.remove('pg-dragging'); stage.classList.remove('dragging');
   const b = t.getBoundingClientRect(), dx = a.left + a.width / 2 - (b.left + b.width / 2), dy = a.top + a.height / 2 - (b.top + b.height / 2);
   /* al soltar, la pieza se asienta en su lugar */
   if (!still() && (dx || dy)) t.animate([{ transform: `translate(${dx}px, ${dy}px) scale(1.02)` }, { transform: 'none' }], { duration: 200, easing: 'cubic-bezier(.23, 1, .32, 1)' });
@@ -729,7 +886,7 @@ if (DEV_DATA !== null) {
 (function guideDemo() {
   const box = $('.pg'), turn = $('#pgTurn');
   turn.innerHTML = tr('Mira cómo se hace, o empieza tú cuando quieras.', 'Watch how it works, or start whenever you like.');
-  const YOUR_TURN = tr('<strong>Tu turno:</strong> elige una paleta, mueve una pieza y publica.', '<strong>Your turn:</strong> pick a palette, move a piece and publish.');
+  const YOUR_TURN = tr('<strong>Tu turno:</strong> elige una paleta, prueba las acciones de cada pieza, edita un texto con doble clic y publica.', '<strong>Your turn:</strong> pick a palette, try each piece’s actions, double-click a text to edit it and publish.');
   if (still()) { turn.innerHTML = YOUR_TURN; return; }
   const m = TEAM[0];
   const g = document.createElement('span'); g.className = 'cur guide'; g.setAttribute('aria-hidden', 'true');
@@ -860,7 +1017,8 @@ $$('.sec-head.rise > h2:not(.join-title)').forEach(h => { h.classList.add('maske
     { el: $('#obras'), f: (x, y, t) => { const d = (x / vw) * .7 + (y / vh) * .5 - (t * 1.5 - .25); return [.55 * g2(d * 3.7), x < vw * .5 ? 'p600' : 'ops']; } },
     { el: $('#proyectos'), f: (x, y, t) => {
         let best = 0, key = 'p300';
-        laneX.forEach(([lx, lw], k) => { const v = g2((x - lx) / (lw * .45)) * clamp01(t * 2.4 - k * .3) * .45; if (v > best) { best = v; key = ['ok', 'p300', 'ops'][k]; } });
+        /* los grupos van apilados: cada uno ilumina su franja horizontal */
+        laneX.forEach(([ly, lh], k) => { const v = g2((y - ly) / (lh * .6)) * clamp01(t * 2.4 - k * .3) * .45; if (v > best) { best = v; key = ['ok', 'p300', 'ops'][k]; } });
         return [best, key]; }, time: false },
     { el: $('#bitacora'), f: (x, y, t, tm) => {
         const m = sstep(.15, .8, t), flow = .65 + .35 * Math.sin(y * .03 - tm * .003);
@@ -905,7 +1063,7 @@ $$('.sec-head.rise > h2:not(.join-title)').forEach(h => { h.classList.add('maske
         if (sc.time) needTime = true;
       }
       if (teamEl && active.some(a => a[0].el && a[0].el.id === 'equipo')) { const b = teamEl.getBoundingClientRect(); teamR = [b.left, b.top, b.right, b.bottom]; }
-      if (active.some(a => a[0].el && a[0].el.id === 'proyectos')) laneX = lanes.map(l => { const b = l.getBoundingClientRect(); return [b.left + b.width / 2, b.width]; });
+      if (active.some(a => a[0].el && a[0].el.id === 'proyectos')) laneX = lanes.map(l => { const b = l.getBoundingClientRect(); return [b.top + b.height / 2, b.height]; });
       const sl = slot(); if (sl && active.some(a => a[0].el && a[0].el.classList.contains('finale'))) { const b = sl.getBoundingClientRect(); slotP = [b.left + b.width / 2, b.top + b.height / 2]; }
     }
     ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height);
@@ -958,12 +1116,17 @@ const loopIO = new IntersectionObserver(es => es.forEach(e => e.target.classList
 window.HX = Object.assign(window.HX || {}, { LANG, tr, TEAM, still, reduceMotion, journey: () => journeyP });
 window.HX_OK = true;
 
-/* El recorrido 3D: en escritorio arranca de inmediato; en pantallas táctiles espera a que el navegador
-   quede libre (máximo 1,5 s) para que los primeros toques no compitan con la compilación de la escena */
+/* El recorrido 3D (~140 KB y la compilación de shaders) espera a que la página termine de cargar y el navegador
+   quede libre, para no competir con el primer pintado: hasta 1,5 s en pantallas táctiles, 500 ms en escritorio.
+   Con ahorro de datos activado no se descarga: se queda el panal de respaldo. */
 {
+  const saveData = (navigator.connection && navigator.connection.saveData) || matchMedia('(prefers-reduced-data: reduce)').matches;
   const loadScene = () => import('./scene.js').catch(() => $('#stage3d').classList.add('no-gl'));
-  if (matchMedia('(pointer: coarse)').matches) addEventListener('load', () => (window.requestIdleCallback || (f => setTimeout(f, 600)))(loadScene, { timeout: 1500 }), { once: true });
-  else loadScene();
+  const timeout = matchMedia('(pointer: coarse)').matches ? 1500 : 500;
+  const whenIdle = () => (window.requestIdleCallback || (f => setTimeout(f, 200)))(loadScene, { timeout });
+  if (saveData) $('#stage3d').classList.add('no-gl');
+  else if (document.readyState === 'complete') whenIdle();
+  else addEventListener('load', whenIdle, { once: true });
 }
 /* si la escena 3D no arranca (sin WebGL o sin red), se muestra el panal de respaldo */
 setTimeout(() => { const st = $('#stage3d'); if (!st.classList.contains('gl-ready')) st.classList.add('no-gl'); }, 6000);

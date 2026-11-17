@@ -8,9 +8,9 @@ const tr = (es: string, en: string) => (locale === 'en' ? en : es);
     <div class="wrap">
       <div class="sec-head rise">
         <h2 id="teamTitle">{tr("Las personas detrás de cada celda", "The people behind every cell")}</h2>
-        <p>{tr("Nos juntamos para construir cosas únicas, aprender en el camino y ayudar a otras personas con nuestro trabajo. Cada color que viste en el recorrido es alguien del equipo.", "We came together to build unique things, learn along the way and help other people with our work. Every color you saw on the journey is someone on the team.")}</p>
+        <p>{tr("Seis personas de diseño y desarrollo. Cada color es alguien del equipo; la celda del centro te espera.", "Six people in design and development. Each colour is someone on the team; the centre cell is waiting for you.")}</p>
       </div>
-      <div class="team-wrap rise"><div class="team hive" id="team" aria-label={tr("El equipo: elige una celda", "The team: pick a cell")}></div><div class="hive-side"><div class="hive-card" id="teamCard" aria-live="polite"></div><p class="hive-hint">{tr("Elige una celda para ver quién está detrás.", "Pick a cell to see who is behind it.")}</p></div></div>
+      <div class="team-wrap rise"><div class="team hive" id="team" aria-label={tr("El equipo: elige una celda", "The team: pick a cell")}></div><div class="hive-side"><div class="hive-card" id="teamCard" aria-live="polite"></div><p class="hive-hint">{tr("Elige otra celda para conocer al equipo.", "Pick another cell to meet the team.")}</p></div></div>
       <div class="contrib" id="contrib" hidden><span class="label">{tr("También en GitHub", "Also on GitHub")}</span><div class="contrib-faces" id="contribFaces"></div></div>
     </div>
   </section>
