@@ -239,7 +239,10 @@ const NEB = [[-34, 18, -58, 78, "p600", .2], [42, 30, -68, 86, "h3", .15], [8, -
 /* El origen: un hexágono de cristal facetado con un núcleo de luz que late despacio */
 const crystalGeo = new THREE.ExtrudeGeometry(shape, { depth: 1, bevelEnabled: true, bevelThickness: .12, bevelSize: .09, bevelSegments: phone ? 1 : 2, curveSegments: phone ? 2 : 4 });
 crystalGeo.translate(0, 0, -.5);
-const crystalMat = phone
+/* el cristal con transmission vuelve a dibujar la escena en cada cuadro: en teléfonos y equipos modestos
+   (4 núcleos o 4 GB de memoria, o menos) se usa el cristal emisivo, que se ve parecido y cuesta mucho menos */
+const lowEnd = (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4;
+const crystalMat = phone || lowEnd
   ? new THREE.MeshPhysicalMaterial({ color: 0x8fb0ff, emissive: 0x4064c6, emissiveIntensity: 1.25, roughness: .12, metalness: 0, transparent: true, opacity: .8, clearcoat: 1, clearcoatRoughness: .08, depthWrite: false })
   : new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: .05, metalness: 0, transmission: 1, thickness: 1.6, ior: 1.5, iridescence: .5, iridescenceIOR: 1.3, clearcoat: 1, clearcoatRoughness: .04, attenuationColor: new THREE.Color(0x7a9feb), attenuationDistance: 2.4 });
 crystalMat.envMapIntensity = 1.3;
